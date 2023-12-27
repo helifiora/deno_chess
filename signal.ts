@@ -1,6 +1,4 @@
-import { isSame } from "./object_helpers.ts";
-
-type Consumer<T> = (value: T, old?: T) => void;
+type Consumer<T> = (value: T) => void;
 
 export class Signal<T> {
   #value: T;
@@ -12,11 +10,8 @@ export class Signal<T> {
   }
 
   set value(newValue: T) {
-    if (!isSame(newValue, this.#value)) {
-      const old = this.#value;
-      this.#value = newValue;
-      this.notify(old);
-    }
+    this.#value = newValue;
+    this.notify();
   }
 
   get value(): T {
@@ -27,9 +22,9 @@ export class Signal<T> {
     this.#listeners.push(consumer);
   }
 
-  notify(old?: T): void {
+  notify(): void {
     for (const item of this.#listeners) {
-      item(this.#value, old);
+      item(this.#value);
     }
   }
 }

@@ -19,23 +19,31 @@ type ViewModelInitial = {
 export class ViewModel {
   #data: GameData;
 
+  capturedBlack: Signal<number>;
+  capturedWhite: Signal<number>;
   captured: Signal<PieceDataPositionless[]>;
-  highlight: Signal<Cell[]>;
+  highlight: Signal<Set<Cell>>;
   origin: Signal<Cell | null>;
-  pieces: Signal<PieceData[]>;
+  pieces: Signal<Map<Cell, PieceData>>;
   round: Signal<number>;
   turn: Signal<Team>;
   check: Signal<string>;
 
-  constructor(initial: ViewModelInitial) {
+  constructor(initial: ViewModelInitial = {}) {
     this.#data = initial.game ?? createGame().data;
     this.turn = new Signal(this.#data.turn);
     this.round = new Signal(this.#data.round);
-    this.pieces = new Signal(this.#data.pieces);
+    // new Set(this.#data.pieces)
+    this.pieces = new Signal(
+      new Map(this.#data.pieces.map((s) => [s.cell, s])),
+    );
     this.captured = new Signal(this.#data.capturedPieces);
     this.check = new Signal<string>("");
     this.origin = new Signal(initial.origin ?? null);
-    this.highlight = new Signal(initial.highlight ?? []);
+    this.highlight = new Signal(new Set(initial.highlight ?? []));
+    const grouped = Object.groupBy(this.#data.capturedPieces, (s) => s.team);
+    this.capturedBlack = new Signal(grouped.black?.length ?? 0);
+    this.capturedWhite = new Signal(grouped.white?.length ?? 0);
   }
 
   select(cell: Cell): void {
@@ -44,6 +52,18 @@ export class ViewModel {
     } else {
       this.#selectPiece(cell);
     }
+  }
+
+  notifyAll(): void {
+    this.captured.notify();
+    this.pieces.notify();
+    this.capturedBlack.notify();
+    this.capturedWhite.notify();
+    this.turn.notify();
+    this.round.notify();
+    this.check.notify();
+    this.origin.notify();
+    this.highlight.notify();
   }
 
   #movePiece(origin: Cell, target: Cell): void {
@@ -80,18 +100,24 @@ export class ViewModel {
   #updateOrigin(result: { origin: Cell; cells: Cell[] } | null): void {
     if (result) {
       this.origin.value = result.origin;
-      this.highlight.value = result.cells;
+      this.highlight.value = new Set(result.cells);
     } else {
       this.origin.value = null;
-      this.highlight.value = [];
+      this.highlight.value = new Set();
     }
   }
 
   #updateGameData(newGameData: GameData): void {
     this.#data = newGameData;
-    this.pieces.value = this.#data.pieces;
+    this.pieces.value = new Map(this.#data.pieces.map((s) => [s.cell, s]));
     this.turn.value = this.#data.turn;
     this.round.value = this.#data.round;
-    this.captured.value = this.#data.capturedPieces;
+    this.#updateCaptured(this.#data.capturedPieces);
+  }
+
+  #updateCaptured(value: PieceDataPositionless[]): void {
+    const grouped = Object.groupBy(value, (s) => s.team);
+    this.capturedBlack.value = grouped.black?.length ?? 0;
+    this.capturedWhite.value = grouped.white?.length ?? 0;
   }
 }
