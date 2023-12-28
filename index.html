@@ -6,206 +6,134 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vite + TS</title>
-  <style>
-    html,
-    body {
-      padding: 0;
-      margin: 0;
-    }
-
-    body {
-      padding: 10px;
-      background-color: #222;
-      display: flex;
-      gap: 24px;
-    }
-
-    .board-game-grid {
-      flex: 1;
-      padding: 8px;
-      max-width: 640px;
-      aspect-ratio: 1;
-      box-sizing: border-box;
-      display: grid;
-      grid-template-columns: 20px repeat(8, 1fr);
-      grid-template-rows: repeat(8, 1fr) 20px;
-      gap: 2px;
-    }
-
-    .board-game-grid > .row,
-    .board-game-grid > .column {
-      color: #fafafa;
-      padding: 4px;
-      font-size: 12px;
-      font-weight: bold;
-      font-family: sans-serif;
-    }
-
-    .board-game-grid > .row {
-      display: flex;
-      align-items: end;
-      justify-content: end;
-    }
-
-    .board-game-grid > .column {
-      display: flex;
-      align-items: start;
-      justify-content: start;
-      line-height: 1;
-    }
-
-    .board-game-grid > .cell {
-      font-family: sans-serif;
-      box-sizing: border-box;
-      display: block;
-      aspect-ratio: 1;
-      border: none;
-      border-radius: 2px;
-      font-weight: bold;
-      font-size: 18px;
-      background-color: #6A7D69;
-      color: #333;
-      transition: background-color 0.3s ease;
-      cursor: pointer;
-    }
-
-    .board-game-grid > .cell:nth-child(odd) {
-      background: #E9F29D;
-    }
-
-    .board-game-grid > .cell.-highlight {
-      background: #EA6AF5;
-    }
-
-
-    .board-game-grid > .cell.-origin {
-      background-color: #744678;
-    }
-
-    p,
-    span {
-      font-family: sans-serif;
-      color: #fafafa;
-    }
-  </style>
 </head>
 
 <body>
 
-  <!-- ROW 8 -->
-  <div class="board-game-grid">
-    <div class="row">8</div>
-    <button class="cell" data-cell="a8"></button>
-    <button class="cell" data-cell="b8"></button>
-    <button class="cell" data-cell="c8"></button>
-    <button class="cell" data-cell="d8"></button>
-    <button class="cell" data-cell="e8"></button>
-    <button class="cell" data-cell="f8"></button>
-    <button class="cell" data-cell="g8"></button>
-    <button class="cell" data-cell="h8"></button>
+  <main class="main-layout">
 
-    <!-- ROW 7 -->
-    <div class="row">7</div>
-    <button class="cell" data-cell="a7"></button>
-    <button class="cell" data-cell="b7"></button>
-    <button class="cell" data-cell="c7"></button>
-    <button class="cell" data-cell="d7"></button>
-    <button class="cell" data-cell="e7"></button>
-    <button class="cell" data-cell="f7"></button>
-    <button class="cell" data-cell="g7"></button>
-    <button class="cell" data-cell="h7"></button>
+    <!-- ROW 8 -->
+    <div class="board-game-grid">
+      <div class="row">8</div>
+      <button class="cell" data-cell="a8"></button>
+      <button class="cell" data-cell="b8"></button>
+      <button class="cell" data-cell="c8"></button>
+      <button class="cell" data-cell="d8"></button>
+      <button class="cell" data-cell="e8"></button>
+      <button class="cell" data-cell="f8"></button>
+      <button class="cell" data-cell="g8"></button>
+      <button class="cell" data-cell="h8"></button>
 
-    <!-- ROW 6 -->
-    <div class="row">6</div>
-    <button class="cell" data-cell="a6"></button>
-    <button class="cell" data-cell="b6"></button>
-    <button class="cell" data-cell="c6"></button>
-    <button class="cell" data-cell="d6"></button>
-    <button class="cell" data-cell="e6"></button>
-    <button class="cell" data-cell="f6"></button>
-    <button class="cell" data-cell="g6"></button>
-    <button class="cell" data-cell="h6"></button>
+      <!-- ROW 7 -->
+      <div class="row">7</div>
+      <button class="cell" data-cell="a7"></button>
+      <button class="cell" data-cell="b7"></button>
+      <button class="cell" data-cell="c7"></button>
+      <button class="cell" data-cell="d7"></button>
+      <button class="cell" data-cell="e7"></button>
+      <button class="cell" data-cell="f7"></button>
+      <button class="cell" data-cell="g7"></button>
+      <button class="cell" data-cell="h7"></button>
 
-    <!-- ROW 5 -->
-    <div class="row">5</div>
-    <button class="cell" data-cell="a5"></button>
-    <button class="cell" data-cell="b5"></button>
-    <button class="cell" data-cell="c5"></button>
-    <button class="cell" data-cell="d5"></button>
-    <button class="cell" data-cell="e5"></button>
-    <button class="cell" data-cell="f5"></button>
-    <button class="cell" data-cell="g5"></button>
-    <button class="cell" data-cell="h5"></button>
+      <!-- ROW 6 -->
+      <div class="row">6</div>
+      <button class="cell" data-cell="a6"></button>
+      <button class="cell" data-cell="b6"></button>
+      <button class="cell" data-cell="c6"></button>
+      <button class="cell" data-cell="d6"></button>
+      <button class="cell" data-cell="e6"></button>
+      <button class="cell" data-cell="f6"></button>
+      <button class="cell" data-cell="g6"></button>
+      <button class="cell" data-cell="h6"></button>
 
-    <!-- ROW 4 -->
-    <div class="row">4</div>
-    <button class="cell" data-cell="a4"></button>
-    <button class="cell" data-cell="b4"></button>
-    <button class="cell" data-cell="c4"></button>
-    <button class="cell" data-cell="d4"></button>
-    <button class="cell" data-cell="e4"></button>
-    <button class="cell" data-cell="f4"></button>
-    <button class="cell" data-cell="g4"></button>
-    <button class="cell" data-cell="h4"></button>
+      <!-- ROW 5 -->
+      <div class="row">5</div>
+      <button class="cell" data-cell="a5"></button>
+      <button class="cell" data-cell="b5"></button>
+      <button class="cell" data-cell="c5"></button>
+      <button class="cell" data-cell="d5"></button>
+      <button class="cell" data-cell="e5"></button>
+      <button class="cell" data-cell="f5"></button>
+      <button class="cell" data-cell="g5"></button>
+      <button class="cell" data-cell="h5"></button>
 
-    <!-- ROW 3 -->
-    <div class="row">3</div>
-    <button class="cell" data-cell="a3"></button>
-    <button class="cell" data-cell="b3"></button>
-    <button class="cell" data-cell="c3"></button>
-    <button class="cell" data-cell="d3"></button>
-    <button class="cell" data-cell="e3"></button>
-    <button class="cell" data-cell="f3"></button>
-    <button class="cell" data-cell="g3"></button>
-    <button class="cell" data-cell="h3"></button>
+      <!-- ROW 4 -->
+      <div class="row">4</div>
+      <button class="cell" data-cell="a4"></button>
+      <button class="cell" data-cell="b4"></button>
+      <button class="cell" data-cell="c4"></button>
+      <button class="cell" data-cell="d4"></button>
+      <button class="cell" data-cell="e4"></button>
+      <button class="cell" data-cell="f4"></button>
+      <button class="cell" data-cell="g4"></button>
+      <button class="cell" data-cell="h4"></button>
 
-    <!-- ROW 2 -->
-    <div class="row">2</div>
-    <button class="cell" data-cell="a2"></button>
-    <button class="cell" data-cell="b2"></button>
-    <button class="cell" data-cell="c2"></button>
-    <button class="cell" data-cell="d2"></button>
-    <button class="cell" data-cell="e2"></button>
-    <button class="cell" data-cell="f2"></button>
-    <button class="cell" data-cell="g2"></button>
-    <button class="cell" data-cell="h2"></button>
+      <!-- ROW 3 -->
+      <div class="row">3</div>
+      <button class="cell" data-cell="a3"></button>
+      <button class="cell" data-cell="b3"></button>
+      <button class="cell" data-cell="c3"></button>
+      <button class="cell" data-cell="d3"></button>
+      <button class="cell" data-cell="e3"></button>
+      <button class="cell" data-cell="f3"></button>
+      <button class="cell" data-cell="g3"></button>
+      <button class="cell" data-cell="h3"></button>
 
-    <!-- ROW 1 -->
-    <div class="row">1</div>
-    <button class="cell" data-cell="a1"></button>
-    <button class="cell" data-cell="b1"></button>
-    <button class="cell" data-cell="c1"></button>
-    <button class="cell" data-cell="d1"></button>
-    <button class="cell" data-cell="e1"></button>
-    <button class="cell" data-cell="f1"></button>
-    <button class="cell" data-cell="g1"></button>
-    <button class="cell" data-cell="h1"></button>
+      <!-- ROW 2 -->
+      <div class="row">2</div>
+      <button class="cell" data-cell="a2"></button>
+      <button class="cell" data-cell="b2"></button>
+      <button class="cell" data-cell="c2"></button>
+      <button class="cell" data-cell="d2"></button>
+      <button class="cell" data-cell="e2"></button>
+      <button class="cell" data-cell="f2"></button>
+      <button class="cell" data-cell="g2"></button>
+      <button class="cell" data-cell="h2"></button>
 
-    <div></div>
-    <div class="column">a</div>
-    <div class="column">b</div>
-    <div class="column">c</div>
-    <div class="column">d</div>
-    <div class="column">e</div>
-    <div class="column">f</div>
-    <div class="column">g</div>
-    <div class="column">h</div>
-  </div>
+      <!-- ROW 1 -->
+      <div class="row">1</div>
+      <button class="cell" data-cell="a1"></button>
+      <button class="cell" data-cell="b1"></button>
+      <button class="cell" data-cell="c1"></button>
+      <button class="cell" data-cell="d1"></button>
+      <button class="cell" data-cell="e1"></button>
+      <button class="cell" data-cell="f1"></button>
+      <button class="cell" data-cell="g1"></button>
+      <button class="cell" data-cell="h1"></button>
 
-  <div>
-    <p>Rodada: <span data-text="current-round" id="current-round"></span></p>
-    <p>Time: <span data-text="current-team" id="current-team"></span></p>
-    <div>
-      <span>Peças capturadas:</span>
-      <div>
-        <p>Pretas: <span data-text="captured-black"></span> </p>
-      </div>
-      <div>
-        <p>Brancas: <span data-text="captured-white"></span></p>
-      </div>
-      <p data-text="message-check"></p>
+      <div></div>
+      <div class="column">a</div>
+      <div class="column">b</div>
+      <div class="column">c</div>
+      <div class="column">d</div>
+      <div class="column">e</div>
+      <div class="column">f</div>
+      <div class="column">g</div>
+      <div class="column">h</div>
     </div>
-  </div>
+
+    <section class="game-info">
+      <p class="text-info">
+        <span class="title">Rodada:</span>
+        <span class="value" data-text="current-round" id="current-round"></span>
+      </p>
+      <p class="text-info">
+        <span class="title">Time:</span>
+        <span class="value" data-text="current-team" id="current-team"></span>
+      </p>
+      <p class="text-info">
+        <span class="title">peças pretas capturadas:</span>
+        <span class="value" data-text="captured-black"></span>
+      </p>
+      <p class="text-info">
+        <span class="title">peças brancas capturadas:</span>
+        <span class="value" data-text="captured-white"></span>
+      </p>
+      <p class="text-checkmate" data-text="message-check"></p>
+    </section>
+
+  </main>
+
 
   <script type="module" src="/main.ts"></script>
 </body>

@@ -36,13 +36,24 @@ export function bindCell(dom: Document, vm: ViewModel) {
       const data = value.get(cell) ?? null;
       if (data === null) {
         $el.innerHTML = "";
-      } else if (!pieceDataIsEqual(oldPieceData, data)) {
-        $el.innerHTML = "";
-        const img = dom.createElement("img");
-        img.src = pieceToSvg(data);
-        $el.appendChild(img);
-        oldPieceData = data;
+        return;
       }
+
+      if (oldPieceData !== null && pieceDataIsEqual(data, oldPieceData)) {
+        return;
+      }
+
+      if (oldPieceData !== null) {
+        $el.innerHTML = "";
+      }
+
+      const img = dom.createElement("img");
+      img.src = pieceToSvg(data);
+      img.style.display = "block";
+      img.style.maxWidth = "100%";
+      img.style.aspectRatio = "1";
+      $el.appendChild(img);
+      oldPieceData = data;
     });
   });
 }
@@ -64,10 +75,9 @@ function pieceToSvg(piece: PieceData): string {
   }
 }
 
-function pieceDataIsEqual(v1: PieceData | null, v2: PieceData | null): boolean {
-  if (v1 === null && v2 === null) {
-    return false;
-  }
-
-  return JSON.stringify(v1) === JSON.stringify(v2);
+function pieceDataIsEqual(v1: PieceData, v2: PieceData): boolean {
+  return v1.cell === v2.cell &&
+    v1.type === v2.type &&
+    v1.moveCount === v2.moveCount &&
+    v1.team === v2.team;
 }

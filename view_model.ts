@@ -33,10 +33,7 @@ export class ViewModel {
     this.#data = initial.game ?? createGame().data;
     this.turn = new Signal(this.#data.turn);
     this.round = new Signal(this.#data.round);
-    // new Set(this.#data.pieces)
-    this.pieces = new Signal(
-      new Map(this.#data.pieces.map((s) => [s.cell, s])),
-    );
+    this.pieces = new Signal(piecesToMap(this.#data.pieces));
     this.captured = new Signal(this.#data.capturedPieces);
     this.check = new Signal<string>("");
     this.origin = new Signal(initial.origin ?? null);
@@ -109,7 +106,7 @@ export class ViewModel {
 
   #updateGameData(newGameData: GameData): void {
     this.#data = newGameData;
-    this.pieces.value = new Map(this.#data.pieces.map((s) => [s.cell, s]));
+    this.pieces.value = piecesToMap(this.#data.pieces);
     this.turn.value = this.#data.turn;
     this.round.value = this.#data.round;
     this.#updateCaptured(this.#data.capturedPieces);
@@ -120,4 +117,8 @@ export class ViewModel {
     this.capturedBlack.value = grouped.black?.length ?? 0;
     this.capturedWhite.value = grouped.white?.length ?? 0;
   }
+}
+
+function piecesToMap(data: PieceData[]): Map<Cell, PieceData> {
+  return new Map(data.map((s) => [s.cell, s]));
 }

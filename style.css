@@ -1,0 +1,123 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+.main-layout {
+  width: 100vw;
+  height: 100dvh;
+  background-color: #222;
+  display: flex;
+  overflow: auto;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.board-game-grid {
+  width: 100%;
+  max-width: 640px;
+  display: grid;
+  grid-template-columns: 20px repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr) 20px;
+  gap: 4px;
+}
+
+.board-game-grid > .row,
+.board-game-grid > .column {
+  color: #fafafa;
+  padding: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: sans-serif;
+  display: flex;
+}
+
+.board-game-grid > .row {
+  align-items: end;
+  justify-content: end;
+}
+
+.board-game-grid > .column {
+  align-items: start;
+  justify-content: start;
+  line-height: 1;
+}
+
+.board-game-grid > .cell {
+  font-family: sans-serif;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: #5A3066;
+  color: #333;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  padding: 0;
+}
+
+.board-game-grid > .cell:nth-child(odd) {
+  background: #C3BEE6;
+}
+
+.board-game-grid > .cell.-highlight {
+  background: #E0DA60;
+}
+
+
+.board-game-grid > .cell.-origin {
+  background-color: #726e1b;
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-left: 24px;
+  border: 1px solid #777;
+  border-radius: 4px;
+  background: #303030;
+  padding: 16px 24px;
+}
+
+
+
+.text-info {
+  gap: 4px;
+  display: flex;
+  font-weight: bold;
+  align-items: baseline;
+}
+
+.text-info > .title {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #dbdbdb;
+}
+
+.text-info > .value {
+  font-size: 16px;
+  color: #a299da;
+  text-align: left;
+}
+
+.text-checkmate {
+  color: #a299da;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
