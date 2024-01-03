@@ -34,12 +34,11 @@ export class PawnMove implements Move {
   }
 
   #verticalAcceptance: AcceptanceFn = (target) => {
-    return this.#piece.board.isEmpty(target) ? "next" : "stop";
+    return target.piece === null ? "next" : "stop";
   };
 
   #diagonalAcceptance: AcceptanceFn = (target) => {
-    const targetPiece = this.#piece.board.get(target);
-    if (targetPiece === null || targetPiece.hasSameTeam(this.#piece)) {
+    if (target.piece === null || target.piece.hasSameTeam(this.#piece)) {
       return "stop";
     }
 

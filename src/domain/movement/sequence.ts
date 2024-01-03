@@ -29,7 +29,7 @@ export abstract class Sequence implements Movement {
     this.piece = piece;
     this.#take = options.take ?? null;
     this.#verify = verify;
-    this.#acceptance = options.acceptance ?? defaultAcceptance(board, piece);
+    this.#acceptance = options.acceptance ?? defaultAcceptance(piece);
   }
 
   abstract execute(): Generator<Position>;
@@ -51,7 +51,11 @@ export abstract class Sequence implements Movement {
 
   *#takeByAcceptance(data: Generator<Position>): Generator<Position> {
     for (const item of data) {
-      const result = this.#acceptance(item);
+      const result = this.#acceptance({
+        piece: this.board.get(item),
+        position: item,
+      });
+
       if (result === "last") {
         yield item;
         break;
@@ -71,14 +75,13 @@ export abstract class Sequence implements Movement {
   }
 }
 
-function defaultAcceptance(board: Board, piece: Piece): AcceptanceFn {
+function defaultAcceptance(piece: Piece): AcceptanceFn {
   return (target) => {
-    const targetPiece = board.get(target);
-    if (targetPiece === null) {
+    if (target.piece === null) {
       return "next";
     }
 
-    if (targetPiece.hasSameTeam(piece)) {
+    if (target.piece.hasSameTeam(piece)) {
       return "stop";
     }
 

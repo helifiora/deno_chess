@@ -1,6 +1,9 @@
+import type { Piece } from "../piece.ts";
 import type { Position } from "../position.ts";
 
-export type AcceptanceFn = (target: Position) => Acceptance;
+type Target = { piece: Piece | null; position: Position };
+
+export type AcceptanceFn = (target: Target) => Acceptance;
 
 export type Acceptance =
   | "next"

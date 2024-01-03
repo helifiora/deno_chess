@@ -46,16 +46,15 @@ Deno.test("Should change acceptance", () => {
   const expectedResult = new Set(["b1", "c1", "d1", "e1"]);
   const movement = new Horizontal(board, piece, false, {
     acceptance: (target) => {
-      const targetPiece = board.get(target);
       if (next) {
         return "last";
       }
 
-      if (targetPiece === null) {
+      if (target.piece === null) {
         return "next";
       }
 
-      if (targetPiece.hasSameTeam(piece)) {
+      if (target.piece.hasSameTeam(piece)) {
         next = true;
         return "next";
       }

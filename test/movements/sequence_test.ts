@@ -96,12 +96,11 @@ describe("Sequence.execute", () => {
 
     const imp = new SequenceImp(board, piece, false, {
       acceptance: (target) => {
-        const targetPiece = board.get(target);
-        if (targetPiece === null) {
+        if (target.piece === null) {
           return "next";
         }
 
-        if (targetPiece.hasSameTeam(piece)) {
+        if (target.piece.hasSameTeam(piece)) {
           return "last";
         }
 

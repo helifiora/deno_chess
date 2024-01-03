@@ -14,9 +14,7 @@ import { toSetCell } from "../helpers/helpers.ts";
 
 function testAcceptance(board: Board, piece: Piece): AcceptanceFn {
   return (target) => {
-    const targetPiece = board.get(target);
-
-    if (targetPiece === null || targetPiece.hasSameTeam(piece)) {
+    if (target.piece === null || target.piece.hasSameTeam(piece)) {
       return "next";
     }
 
@@ -36,7 +34,7 @@ describe("Builder.addHorizontal", () => {
     ]);
 
     piece = board.get(Position.fromCell("a1"))!;
-    builder = new MovementBuilder(board, piece, false);
+    builder = new MovementBuilder(piece, false);
   });
 
   it("Should generate horizontal positions", () => {
@@ -82,7 +80,7 @@ describe("Builder.addVertical", () => {
     ]);
 
     piece = board.get(Position.fromCell("a3"))!;
-    builder = new MovementBuilder(board, piece, false);
+    builder = new MovementBuilder(piece, false);
   });
 
   it("Should generate positions", () => {
@@ -149,7 +147,7 @@ describe("Builder.addL", () => {
     ]);
 
     piece = board.get(Position.fromCell("h4"))!;
-    builder = new MovementBuilder(board, piece, false);
+    builder = new MovementBuilder(piece, false);
   });
 
   it("Should generate positions", () => {
@@ -174,7 +172,7 @@ describe("Builder.addDiagonal", () => {
     ]);
 
     piece = board.get(Position.fromCell("b2"))!;
-    builder = new MovementBuilder(board, piece, false);
+    builder = new MovementBuilder(piece, false);
   });
 
   it("Should generate positions", () => {
@@ -239,7 +237,7 @@ describe("Builder.build", () => {
     ]);
 
     piece = board.get(Position.fromCell("a1"))!;
-    builder = new MovementBuilder(board, piece, false);
+    builder = new MovementBuilder(piece, false);
   });
 
   it("Should compose multiple movements", () => {

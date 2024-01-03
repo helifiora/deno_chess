@@ -7,14 +7,14 @@ import { MovementBuilder } from "./builder.ts";
 type MoveFactory = (piece: Piece, verifyCheck: boolean) => Generator<Position>;
 
 const createRookMoves: MoveFactory = (piece, verifyCheck) => {
-  return new MovementBuilder(piece.board, piece, verifyCheck)
+  return new MovementBuilder(piece, verifyCheck)
     .addHorizontal()
     .addVertical()
     .build();
 };
 
 const createQueenMoves: MoveFactory = (piece, verify) => {
-  return new MovementBuilder(piece.board, piece, verify)
+  return new MovementBuilder(piece, verify)
     .addDiagonal()
     .addVertical()
     .addHorizontal()
@@ -22,13 +22,13 @@ const createQueenMoves: MoveFactory = (piece, verify) => {
 };
 
 const createBishopMoves: MoveFactory = (piece, verify) => {
-  return new MovementBuilder(piece.board, piece, verify)
+  return new MovementBuilder(piece, verify)
     .addDiagonal()
     .build();
 };
 
 const createKnightMoves: MoveFactory = (piece, verify) => {
-  return new MovementBuilder(piece.board, piece, verify)
+  return new MovementBuilder(piece, verify)
     .addL()
     .build();
 };
@@ -39,19 +39,18 @@ const createPawnMoves: MoveFactory = (piece, verify) => {
   const verticalTake = piece.moveCount === 0 ? 2 : 1;
 
   const verticalAcceptance: AcceptanceFn = (target) => {
-    return piece.board.isEmpty(target) ? "next" : "stop";
+    return target.piece === null ? "next" : "stop";
   };
 
   const diagonalAcceptance: AcceptanceFn = (target) => {
-    const targetPiece = piece.board.get(target);
-    if (targetPiece === null || targetPiece.hasSameTeam(piece)) {
+    if (target.piece === null || target.piece.hasSameTeam(piece)) {
       return "stop";
     }
 
     return "next";
   };
 
-  return new MovementBuilder(piece.board, piece, verify)
+  return new MovementBuilder(piece, verify)
     .addVertical({
       acceptance: verticalAcceptance,
       direction,
@@ -66,7 +65,7 @@ const createPawnMoves: MoveFactory = (piece, verify) => {
 };
 
 const createKingMoves: MoveFactory = (piece, verify) => {
-  return new MovementBuilder(piece.board, piece, verify)
+  return new MovementBuilder(piece, verify)
     .addDiagonal({ take: 1 })
     .addHorizontal({ take: 1 })
     .addVertical({ take: 1 })
