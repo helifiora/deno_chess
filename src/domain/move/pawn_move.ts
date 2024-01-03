@@ -15,7 +15,7 @@ export class PawnMove implements Move {
   execute(verify: boolean): Generator<Position> {
     const direction = toDirection(this.#piece.team);
 
-    return new MovementBuilder(this.#piece.board, this.#piece, verify)
+    return new MovementBuilder(this.#piece, verify)
       .addDiagonal({
         acceptance: this.#diagonalAcceptance,
         direction,

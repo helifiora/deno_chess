@@ -1,7 +1,7 @@
 import { Signal } from "./signal.ts";
 import { ViewModel } from "./view_model.ts";
 
-export function bindText(dom: Document, vm: ViewModel): void {
+export function bindText(vm: ViewModel): void {
   const m = new Map<string, Signal<any>>([
     ["current-round", vm.round],
     ["current-team", vm.turn],
@@ -10,10 +10,10 @@ export function bindText(dom: Document, vm: ViewModel): void {
     ["message-check", vm.check],
   ]);
 
-  dom.querySelectorAll("[data-text]").forEach(($el) => {
+  document.querySelectorAll("[data-text]").forEach(($el) => {
     const key = $el.getAttribute("data-text") ?? "";
-    const signal = m.get(key);
-    if (signal) {
+    const signal = m.get(key) ?? null;
+    if (signal !== null) {
       signal.subscribe((s) => $el.textContent = `${s}`);
     }
   });

@@ -16,68 +16,88 @@ import whiteKing from "./icons/white-king.svg";
 import { Cell } from "./src/domain/cell.ts";
 import { PieceData } from "./src/domain/piece.ts";
 import { ViewModel } from "./view_model.ts";
+import { isPieceDataEqual } from "./src/domain/piece_helpers.ts";
 
-export function bindCell(dom: Document, vm: ViewModel) {
-  dom.querySelectorAll("[data-cell]").forEach(($el) => {
-    let oldPieceData: PieceData | null = null;
-    const cell = $el.getAttribute("data-cell") as Cell;
+const selector = "data-cell";
 
-    $el.addEventListener("click", () => vm.select(cell));
+export function bindCell(vm: ViewModel): void {
+  document.querySelectorAll(`[${selector}]`).forEach(($element) => {
+    const updater = new CellUpdater($element);
 
-    vm.highlight.subscribe((value) => {
-      $el.classList.toggle("-highlight", value.has(cell));
-    });
+    updater.onClick((cell) => vm.select(cell));
 
-    vm.origin.subscribe((value) => {
-      $el.classList.toggle("-origin", value === cell);
-    });
+    vm.highlight.subscribe((value) => updater.updateHighlight(value));
 
-    vm.pieces.subscribe((value) => {
-      const data = value.get(cell) ?? null;
-      if (data === null) {
-        $el.innerHTML = "";
-        return;
-      }
+    vm.origin.subscribe((value) => updater.updateOrigin(value));
 
-      if (oldPieceData !== null && pieceDataIsEqual(data, oldPieceData)) {
-        return;
-      }
-
-      if (oldPieceData !== null) {
-        $el.innerHTML = "";
-      }
-
-      const img = dom.createElement("img");
-      img.src = pieceToSvg(data);
-      img.style.display = "block";
-      img.style.maxWidth = "100%";
-      img.style.aspectRatio = "1";
-      $el.appendChild(img);
-      oldPieceData = data;
-    });
+    vm.pieces.subscribe((value) => updater.updatePieces(value));
   });
 }
 
-function pieceToSvg(piece: PieceData): string {
-  switch (piece.type) {
-    case "rook":
-      return piece.team === "white" ? whiteRook : blackRook;
-    case "knight":
-      return piece.team === "white" ? whiteKnight : blackKnight;
-    case "pawn":
-      return piece.team === "white" ? whitePawn : blackPawn;
-    case "king":
-      return piece.team === "white" ? whiteKing : blackKing;
-    case "queen":
-      return piece.team === "white" ? whiteQueen : blackQueen;
-    case "bishop":
-      return piece.team === "white" ? whiteBishop : blackBishop;
-  }
-}
+class CellUpdater {
+  #element: HTMLElement;
+  #cell: Cell;
+  #data: PieceData | null;
 
-function pieceDataIsEqual(v1: PieceData, v2: PieceData): boolean {
-  return v1.cell === v2.cell &&
-    v1.type === v2.type &&
-    v1.moveCount === v2.moveCount &&
-    v1.team === v2.team;
+  constructor(element: HTMLElement) {
+    this.#element = element;
+    this.#cell = element.getAttribute(selector) as Cell;
+    this.#data = null;
+  }
+
+  onClick(consumer: (cell: Cell) => void): void {
+    this.#element.addEventListener("click", () => consumer(this.#cell));
+  }
+
+  updateHighlight(value: Set<Cell>): void {
+    this.#element.classList.toggle("-highlight", value.has(this.#cell));
+  }
+
+  updateOrigin(value: Cell | null): void {
+    this.#element.classList.toggle("-origin", this.#cell === value);
+  }
+
+  updatePieces(pieces: Map<Cell, PieceData>): void {
+    const newPieceData = pieces.get(this.#cell) ?? null;
+    if (newPieceData === null) {
+      this.#data = null;
+      this.#element.innerHTML = "";
+      return;
+    }
+
+    if (this.#isPieceDataEqual(newPieceData)) {
+      return;
+    }
+
+    this.#element.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = this.#toSvg(newPieceData);
+    img.style.display = "block";
+    img.style.maxWidth = "100%";
+    img.style.aspectRatio = "1";
+    this.#element.appendChild(img);
+    this.#data = newPieceData;
+  }
+
+  #isPieceDataEqual(other: PieceData): boolean {
+    return this.#data !== null &&
+      isPieceDataEqual(this.#data, other);
+  }
+
+  #toSvg(piece: PieceData): unknown {
+    switch (piece.type) {
+      case "rook":
+        return piece.team === "white" ? whiteRook : blackRook;
+      case "knight":
+        return piece.team === "white" ? whiteKnight : blackKnight;
+      case "pawn":
+        return piece.team === "white" ? whitePawn : blackPawn;
+      case "king":
+        return piece.team === "white" ? whiteKing : blackKing;
+      case "queen":
+        return piece.team === "white" ? whiteQueen : blackQueen;
+      case "bishop":
+        return piece.team === "white" ? whiteBishop : blackBishop;
+    }
+  }
 }

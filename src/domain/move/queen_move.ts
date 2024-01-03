@@ -11,7 +11,7 @@ export class QueenMove implements Move {
   }
 
   execute(verify: boolean): Generator<Position> {
-    return new MovementBuilder(this.#piece.board, this.#piece, verify)
+    return new MovementBuilder(this.#piece, verify)
       .addHorizontal()
       .addVertical()
       .addDiagonal()

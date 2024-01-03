@@ -1,7 +1,7 @@
 import { Board } from "./board.ts";
 import { Position } from "./position.ts";
 import { Team } from "./team.ts";
-import { Piece } from "./piece.ts";
+import { Piece, PieceData } from "./piece.ts";
 
 export function* selectMovesByTeam(
   board: Board,
@@ -13,4 +13,11 @@ export function* selectMovesByTeam(
       yield { piece, target: move };
     }
   }
+}
+
+export function isPieceDataEqual(v1: PieceData, v2: PieceData): boolean {
+  return v1.cell === v2.cell &&
+    v1.type === v2.type &&
+    v1.moveCount === v2.moveCount &&
+    v1.team === v2.team;
 }

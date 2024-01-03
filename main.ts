@@ -6,7 +6,7 @@ import { bindCell } from "./bind_cell.ts";
 
 const vm = new ViewModel();
 
-bindCell(document, vm);
-bindText(document, vm);
+bindCell(vm);
+bindText(vm);
 
 vm.notifyAll();
