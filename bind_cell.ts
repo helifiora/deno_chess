@@ -21,17 +21,14 @@ import { isPieceDataEqual } from "./src/domain/piece_helpers.ts";
 const selector = "data-cell";
 
 export function bindCell(vm: ViewModel): void {
-  document.querySelectorAll(`[${selector}]`).forEach(($element) => {
-    const updater = new CellUpdater($element);
-
+  const elements = Array.from(document.querySelectorAll(`[${selector}]`));
+  for (const element of elements) {
+    const updater = new CellUpdater(element);
     updater.onClick((cell) => vm.select(cell));
-
     vm.highlight.subscribe((value) => updater.updateHighlight(value));
-
     vm.origin.subscribe((value) => updater.updateOrigin(value));
-
     vm.pieces.subscribe((value) => updater.updatePieces(value));
-  });
+  }
 }
 
 class CellUpdater {
@@ -65,23 +62,17 @@ class CellUpdater {
       return;
     }
 
-    if (this.#isPieceDataEqual(newPieceData)) {
-      return;
+    if (this.isPieceDataDifferentThan(newPieceData)) {
+      this.#element.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = this.#toSvg(newPieceData);
+      this.#element.appendChild(img);
+      this.#data = newPieceData;
     }
-
-    this.#element.innerHTML = "";
-    const img = document.createElement("img");
-    img.src = this.#toSvg(newPieceData);
-    img.style.display = "block";
-    img.style.maxWidth = "100%";
-    img.style.aspectRatio = "1";
-    this.#element.appendChild(img);
-    this.#data = newPieceData;
   }
 
-  #isPieceDataEqual(other: PieceData): boolean {
-    return this.#data !== null &&
-      isPieceDataEqual(this.#data, other);
+  isPieceDataDifferentThan(other: PieceData): boolean {
+    return this.#data === null || !isPieceDataEqual(this.#data, other);
   }
 
   #toSvg(piece: PieceData): unknown {

@@ -12,7 +12,7 @@ import { Piece } from "../../src/domain/piece.ts";
 import { Position } from "../../src/domain/position.ts";
 import { toSetCell } from "../helpers/helpers.ts";
 
-function testAcceptance(board: Board, piece: Piece): AcceptanceFn {
+function testAcceptance(_: Board, piece: Piece): AcceptanceFn {
   return (target) => {
     if (target.piece === null || target.piece.hasSameTeam(piece)) {
       return "next";

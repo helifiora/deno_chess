@@ -1,20 +1,16 @@
-import { Signal } from "./signal.ts";
-import { ViewModel } from "./view_model.ts";
+import type { Signal } from "./signal.ts";
 
-export function bindText(vm: ViewModel): void {
-  const m = new Map<string, Signal<any>>([
-    ["current-round", vm.round],
-    ["current-team", vm.turn],
-    ["captured-black", vm.capturedBlack],
-    ["captured-white", vm.capturedWhite],
-    ["message-check", vm.check],
-  ]);
+const selector = "data-text";
 
-  document.querySelectorAll("[data-text]").forEach(($el) => {
-    const key = $el.getAttribute("data-text") ?? "";
-    const signal = m.get(key) ?? null;
+type Mapping = Record<string, Signal<string>>;
+
+export function bindText(mapping: Mapping): void {
+  const elements = Array.from(document.querySelectorAll(`[${selector}]`));
+  for (const element of elements) {
+    const key = element.getAttribute(selector) ?? "";
+    const signal = mapping[key] ?? null;
     if (signal !== null) {
-      signal.subscribe((s) => $el.textContent = `${s}`);
+      signal.subscribe((s) => element.textContent = s);
     }
-  });
+  }
 }

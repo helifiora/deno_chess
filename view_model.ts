@@ -7,7 +7,6 @@ import { movePieceTo } from "./src/application/usecase/move_piece_to.ts";
 import { selectPieceMoves } from "./src/application/usecase/select_piece_moves.ts";
 import { Cell } from "./src/domain/cell.ts";
 import { PieceData, PieceDataPositionless } from "./src/domain/piece.ts";
-import { Team } from "./src/domain/team.ts";
 import { GameData } from "./src/game.ts";
 
 type ViewModelInitial = {
@@ -19,28 +18,28 @@ type ViewModelInitial = {
 export class ViewModel {
   #data: GameData;
 
-  capturedBlack: Signal<number>;
-  capturedWhite: Signal<number>;
+  check: Signal<string>;
+  capturedBlack: Signal<string>;
+  capturedWhite: Signal<string>;
   captured: Signal<PieceDataPositionless[]>;
   highlight: Signal<Set<Cell>>;
   origin: Signal<Cell | null>;
   pieces: Signal<Map<Cell, PieceData>>;
-  round: Signal<number>;
-  turn: Signal<Team>;
-  check: Signal<string>;
+  round: Signal<string>;
+  turn: Signal<string>;
 
   constructor(initial: ViewModelInitial = {}) {
     this.#data = initial.game ?? createGame().data;
-    this.turn = new Signal(this.#data.turn);
-    this.round = new Signal(this.#data.round);
+    this.turn = new Signal(this.#data.turn as string);
+    this.round = new Signal(`${this.#data.round}`);
     this.pieces = new Signal(piecesToMap(this.#data.pieces));
     this.captured = new Signal(this.#data.capturedPieces);
     this.check = new Signal<string>("");
     this.origin = new Signal(initial.origin ?? null);
     this.highlight = new Signal(new Set(initial.highlight ?? []));
     const grouped = Object.groupBy(this.#data.capturedPieces, (s) => s.team);
-    this.capturedBlack = new Signal(grouped.black?.length ?? 0);
-    this.capturedWhite = new Signal(grouped.white?.length ?? 0);
+    this.capturedBlack = new Signal(`${grouped.black?.length ?? 0}`);
+    this.capturedWhite = new Signal(`${grouped.white?.length ?? 0}`);
   }
 
   select(cell: Cell): void {
@@ -108,14 +107,10 @@ export class ViewModel {
     this.#data = newGameData;
     this.pieces.value = piecesToMap(this.#data.pieces);
     this.turn.value = this.#data.turn;
-    this.round.value = this.#data.round;
-    this.#updateCaptured(this.#data.capturedPieces);
-  }
-
-  #updateCaptured(value: PieceDataPositionless[]): void {
-    const grouped = Object.groupBy(value, (s) => s.team);
-    this.capturedBlack.value = grouped.black?.length ?? 0;
-    this.capturedWhite.value = grouped.white?.length ?? 0;
+    this.round.value = `${this.#data.round}`;
+    const grouped = Object.groupBy(this.#data.capturedPieces, (s) => s.team);
+    this.capturedBlack.value = `${grouped.black?.length ?? 0}`;
+    this.capturedWhite.value = `${grouped.white?.length ?? 0}`;
   }
 }
 

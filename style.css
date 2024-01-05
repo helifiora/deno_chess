@@ -11,6 +11,11 @@ body {
   margin: 0;
 }
 
+img {
+  display: block;
+  max-width: 100%;
+}
+
 .main-layout {
   width: 100vw;
   height: 100dvh;
@@ -93,8 +98,6 @@ body {
   background: #303030;
   padding: 16px 24px;
 }
-
-
 
 .text-info {
   gap: 4px;

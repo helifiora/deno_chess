@@ -7,6 +7,13 @@ import { bindCell } from "./bind_cell.ts";
 const vm = new ViewModel();
 
 bindCell(vm);
-bindText(vm);
+
+bindText({
+  "current-round": vm.round,
+  "current-team": vm.turn,
+  "captured-black": vm.capturedBlack,
+  "captured-white": vm.capturedWhite,
+  "message-check": vm.check,
+});
 
 vm.notifyAll();
