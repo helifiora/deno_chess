@@ -69,7 +69,10 @@ export function movePieceTo(data: GameData, input: Input): Output {
   });
 }
 
-function addCapturedPiece(data: GameData, captured: PieceDataPositionless | null): PieceDataPositionless[] {
+function addCapturedPiece(
+  data: GameData,
+  captured: PieceDataPositionless | null,
+): PieceDataPositionless[] {
   if (captured) {
     return [...data.capturedPieces, captured];
   }

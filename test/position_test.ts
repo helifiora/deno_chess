@@ -1,8 +1,24 @@
-import { assert, assertEquals, assertFalse, assertInstanceOf, assertNotStrictEquals, assertThrows } from "@std/assert";
+import {
+  assert,
+  assertEquals,
+  assertFalse,
+  assertInstanceOf,
+  assertNotStrictEquals,
+  assertThrows,
+} from "@std/assert";
 import { describe, it } from "@std/testing/bdd";
-import { generateInvalidData, generateValidData, toSetCell } from "./helpers/helpers.ts";
+import {
+  generateInvalidData,
+  generateValidData,
+  toSetCell,
+} from "./helpers/helpers.ts";
 import { Cell } from "@/domain/cell.ts";
-import { Position, PositionData, PositionIncrement, PositionInvalidError } from "@/domain/position.ts";
+import {
+  Position,
+  PositionData,
+  PositionIncrement,
+  PositionInvalidError,
+} from "@/domain/position.ts";
 
 describe("Position.clone", () => {
   it("Should clone", () => {

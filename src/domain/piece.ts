@@ -30,7 +30,13 @@ export class Piece {
   #type: PieceType;
   #moves: Move;
 
-  constructor(board: Board, type: PieceType, team: Team, position: Position, moveCount: number) {
+  constructor(
+    board: Board,
+    type: PieceType,
+    team: Team,
+    position: Position,
+    moveCount: number,
+  ) {
     this.#board = board;
     this.#team = team;
     this.#position = position;

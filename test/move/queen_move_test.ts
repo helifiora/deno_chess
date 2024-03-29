@@ -7,7 +7,11 @@ import { Horizontal } from "@/domain/movement/horizontal.ts";
 import { Vertical } from "@/domain/movement/vertical.ts";
 import { Diagonal } from "@/domain/movement/diagonal.ts";
 import { merge, toSet } from "@/generator.ts";
-import { fakePieceData, generateValidCell, toSetCell } from "../helpers/helpers.ts";
+import {
+  fakePieceData,
+  generateValidCell,
+  toSetCell,
+} from "../helpers/helpers.ts";
 
 function toExpected(cell: Cell): Set<Cell> {
   const origin = Position.fromCell(cell);

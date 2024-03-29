@@ -3,7 +3,11 @@ import { describe, it } from "@std/testing/bdd";
 import { Board } from "@/domain/board.ts";
 import { Cell } from "@/domain/cell.ts";
 import { Position } from "@/domain/position.ts";
-import { fakePieceData, generateValidCell, toSetCell } from "../helpers/helpers.ts";
+import {
+  fakePieceData,
+  generateValidCell,
+  toSetCell,
+} from "../helpers/helpers.ts";
 import { horizontalData } from "../helpers/horizontal_data.ts";
 import { verticalData } from "../helpers/vertical_data.ts";
 

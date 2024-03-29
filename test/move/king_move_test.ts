@@ -4,7 +4,11 @@ import { Board } from "@/domain/board.ts";
 import { Cell } from "@/domain/cell.ts";
 import { merge, take } from "@/generator.ts";
 import { Position, PositionIncrement } from "@/domain/position.ts";
-import { fakePieceData, generateValidCell, toSetCell } from "../helpers/helpers.ts";
+import {
+  fakePieceData,
+  generateValidCell,
+  toSetCell,
+} from "../helpers/helpers.ts";
 
 function toExpected(origin: Position): Set<Cell> {
   const increments: PositionIncrement[] = [
@@ -18,7 +22,9 @@ function toExpected(origin: Position): Set<Cell> {
     { y: -1 },
   ];
 
-  const generators = increments.map((i) => take(Position.sequence(origin, i), 1));
+  const generators = increments.map((i) =>
+    take(Position.sequence(origin, i), 1)
+  );
 
   return toSetCell(merge(...generators));
 }

@@ -1,4 +1,9 @@
-import { assert, assertEquals, assertFalse, assertStrictEquals } from "@std/assert";
+import {
+  assert,
+  assertEquals,
+  assertFalse,
+  assertStrictEquals,
+} from "@std/assert";
 import { fakePieceData } from "./helpers/helpers.ts";
 import { Board } from "@/domain/board.ts";
 import { Position } from "@/domain/position.ts";

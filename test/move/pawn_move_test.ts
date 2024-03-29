@@ -5,7 +5,11 @@ import { toDirection } from "@/domain/direction.ts";
 import { take } from "@/generator.ts";
 import { Position, PositionIncrement } from "@/domain/position.ts";
 import { invertTeam, Team } from "@/domain/team.ts";
-import { fakePieceData, generateValidCell, toSetCell } from "../helpers/helpers.ts";
+import {
+  fakePieceData,
+  generateValidCell,
+  toSetCell,
+} from "../helpers/helpers.ts";
 
 function toIncrement(team: Team): PositionIncrement {
   return toDirection(team) === "top" ? { y: -1 } : { y: 1 };

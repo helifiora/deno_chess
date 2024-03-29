@@ -1,4 +1,9 @@
-import { assert, assertEquals, assertFalse, assertNotStrictEquals } from "@std/assert";
+import {
+  assert,
+  assertEquals,
+  assertFalse,
+  assertNotStrictEquals,
+} from "@std/assert";
 import { beforeEach, describe, it } from "@std/testing/bdd";
 
 import { Board } from "@/domain/board.ts";

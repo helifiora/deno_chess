@@ -5,7 +5,11 @@ import type { PieceData } from "./piece.ts";
 
 type PieceMove = { origin: Position; target: Position };
 
-export function* selectMovesByTeam(board: Board, team: Team, verifyCheck: boolean): Generator<PieceMove> {
+export function* selectMovesByTeam(
+  board: Board,
+  team: Team,
+  verifyCheck: boolean,
+): Generator<PieceMove> {
   for (const piece of board.pieces(team)) {
     for (const move of piece.moves(verifyCheck)) {
       yield { origin: piece.position, target: move };

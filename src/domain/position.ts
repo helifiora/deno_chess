@@ -30,7 +30,10 @@ export class Position {
     return new Position(x, y);
   }
 
-  static increment(position: Position, increment: PositionIncrement): Result<Position, PositionInvalidError> {
+  static increment(
+    position: Position,
+    increment: PositionIncrement,
+  ): Result<Position, PositionInvalidError> {
     const x = position.x + (increment.x ?? 0);
     const y = position.y + (increment.y ?? 0);
     if (!Position.isValid(x, y)) {
@@ -48,7 +51,10 @@ export class Position {
     return Position.inRange(x) && Position.inRange(y);
   }
 
-  static *sequence(origin: Position, increment: PositionIncrement): Generator<Position> {
+  static *sequence(
+    origin: Position,
+    increment: PositionIncrement,
+  ): Generator<Position> {
     let iterator = origin;
     while (true) {
       const result = Position.increment(iterator, increment);

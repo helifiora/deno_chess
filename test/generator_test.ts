@@ -1,6 +1,16 @@
 import { assert, assertEquals, assertFalse } from "@std/assert";
 
-import { every, filter, flatMap, map, merge, some, take, toArray, toSet } from "@/generator.ts";
+import {
+  every,
+  filter,
+  flatMap,
+  map,
+  merge,
+  some,
+  take,
+  toArray,
+  toSet,
+} from "@/generator.ts";
 
 Deno.test("Should map", () => {
   const items = [1, 5, 9];

@@ -24,7 +24,10 @@ export function isInCheckmate(board: Board, team: Team): boolean {
     (s) => doesMoveCausesCheck(board, s.origin, s.target),
   );
 
-  const hasMoveThatUndoCheck = some(moveCausesCheck, (s) => s.ok && s.data === false);
+  const hasMoveThatUndoCheck = some(
+    moveCausesCheck,
+    (s) => s.ok && s.data === false,
+  );
   return hasMoveThatUndoCheck === false;
 }
 
