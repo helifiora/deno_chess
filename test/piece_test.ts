@@ -1,13 +1,8 @@
+import { assert, assertEquals, assertFalse, assertStrictEquals } from "@std/assert";
 import { fakePieceData } from "./helpers/helpers.ts";
-import {
-  assertEquals,
-  assertFalse,
-  assertStrictEquals,
-} from "https://deno.land/std@0.202.0/assert/mod.ts";
-import { assert } from "https://deno.land/std@0.202.0/assert/assert.ts";
-import { Board } from "../src/domain/board.ts";
-import { Position } from "../src/domain/position.ts";
-import { Piece } from "../src/domain/piece.ts";
+import { Board } from "@/domain/board.ts";
+import { Position } from "@/domain/position.ts";
+import { Piece } from "@/domain/piece.ts";
 
 Deno.test("Should Piece.board return board", () => {
   const board = Board.empty();

@@ -1,10 +1,10 @@
-import { describe, it } from "https://deno.land/std@0.202.0/testing/bdd.ts";
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/assert_equals.ts";
-import { Diagonal } from "../../src/domain/movement/diagonal.ts";
+import { describe, it } from "@std/testing/bdd";
+import { assertEquals } from "@std/assert";
+import { Diagonal } from "@/domain/movement/diagonal.ts";
+import { Board } from "@/domain/board.ts";
+import { map } from "@/generator.ts";
+import { Position } from "@/domain/position.ts";
 import { diagonalData } from "../helpers/diagonal_data.ts";
-import { Board } from "../../src/domain/board.ts";
-import { map } from "../../src/generator.ts";
-import { Position } from "../../src/domain/position.ts";
 import { toSetCell } from "../helpers/helpers.ts";
 
 describe("Generate positions", () => {

@@ -2,10 +2,27 @@
   "version": "3",
   "packages": {
     "specifiers": {
+      "jsr:@std/assert@^0.221.0": "jsr:@std/assert@0.221.0",
+      "jsr:@std/fmt@^0.221.0": "jsr:@std/fmt@0.221.0",
+      "jsr:@std/testing@^0.221.0": "jsr:@std/testing@0.221.0",
       "npm:lodash-es": "npm:lodash-es@4.17.21",
       "npm:underscore": "npm:underscore@1.13.6",
       "npm:vite": "npm:vite@5.0.7",
       "npm:vite@^5.0.10": "npm:vite@5.0.10"
+    },
+    "jsr": {
+      "@std/assert@0.221.0": {
+        "integrity": "a5f1aa6e7909dbea271754fd4ab3f4e687aeff4873b4cef9a320af813adb489a",
+        "dependencies": [
+          "jsr:@std/fmt@^0.221.0"
+        ]
+      },
+      "@std/fmt@0.221.0": {
+        "integrity": "379fed69bdd9731110f26b9085aeb740606b20428ce6af31ef6bd45ef8efa62a"
+      },
+      "@std/testing@0.221.0": {
+        "integrity": "d9b5ed7d5dc4e8d193734a594e7f80c04a5a6f34c2493e69c6713ae7fe6f880e"
+      }
     },
     "npm": {
       "@esbuild/android-arm64@0.19.8": {
@@ -504,5 +521,11 @@
     "https://deno.land/x/webview@0.7.6/mod.ts": "c63ad9bffdf37742d84aa3637e1a4e7e3cad7303a80bbe87ce3048b27d2f3d89",
     "https://deno.land/x/webview@0.7.6/src/ffi.ts": "b86e4bc26e31d78e4fed1e19551c412654fbccf29066ea6f68edeb7821bb8032",
     "https://deno.land/x/webview@0.7.6/src/webview.ts": "063a64685c2d3946ef29722a7e9c1dac475c1a029fb713fc6abe3c950fe208f6"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/assert@^0.221.0",
+      "jsr:@std/testing@^0.221.0"
+    ]
   }
 }

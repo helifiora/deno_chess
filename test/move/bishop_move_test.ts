@@ -1,14 +1,10 @@
-import { fakePieceData, toSetCell } from "../helpers/helpers.ts";
-import {
-  assert,
-  assertEquals,
-  assertNotStrictEquals,
-} from "https://deno.land/std@0.202.0/assert/mod.ts";
+import { describe, it } from "@std/testing/bdd";
+import { assert, assertEquals, assertNotStrictEquals } from "@std/assert";
 import { diagonalData } from "../helpers/diagonal_data.ts";
-import { Board } from "../../src/domain/board.ts";
-import { Cell } from "../../src/domain/cell.ts";
-import { Position } from "../../src/domain/position.ts";
-import { describe, it } from "https://deno.land/std@0.202.0/testing/bdd.ts";
+import { Board } from "@/domain/board.ts";
+import { Cell } from "@/domain/cell.ts";
+import { Position } from "@/domain/position.ts";
+import { fakePieceData, toSetCell } from "../helpers/helpers.ts";
 
 describe("Bishop positions", () => {
   for (const [cell, output] of diagonalData()) {

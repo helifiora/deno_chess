@@ -1,19 +1,11 @@
-import {
-  assert,
-  assertEquals,
-  assertFalse,
-  assertNotStrictEquals,
-} from "https://deno.land/std@0.202.0/assert/mod.ts";
-import {
-  beforeEach,
-  describe,
-  it,
-} from "https://deno.land/std@0.202.0/testing/bdd.ts";
-import { Board } from "../src/domain/board.ts";
-import { filter, map } from "../src/generator.ts";
-import { PieceData } from "../src/domain/piece.ts";
-import { Position } from "../src/domain/position.ts";
-import { Cell } from "../src/domain/cell.ts";
+import { assert, assertEquals, assertFalse, assertNotStrictEquals } from "@std/assert";
+import { beforeEach, describe, it } from "@std/testing/bdd";
+
+import { Board } from "@/domain/board.ts";
+import { filter, map } from "@/generator.ts";
+import { PieceData } from "@/domain/piece.ts";
+import { Position } from "@/domain/position.ts";
+import { Cell } from "@/domain/cell.ts";
 
 describe("Board.pieces", () => {
   let data: Map<Cell, PieceData>;

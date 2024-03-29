@@ -1,9 +1,9 @@
-import { describe, it } from "https://deno.land/std@0.202.0/testing/bdd.ts";
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts";
-import { Vertical } from "../../src/domain/movement/vertical.ts";
+import { describe, it } from "@std/testing/bdd";
+import { assertEquals } from "@std/assert";
+import { Vertical } from "@/domain/movement/vertical.ts";
+import { Board } from "@/domain/board.ts";
+import { Position } from "@/domain/position.ts";
 import { verticalData } from "../helpers/vertical_data.ts";
-import { Board } from "../../src/domain/board.ts";
-import { Position } from "../../src/domain/position.ts";
 import { fakePieceData, toSetCell } from "../helpers/helpers.ts";
 
 describe("Generate positions", () => {

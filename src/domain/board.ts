@@ -2,6 +2,7 @@ import type { Team } from "./team.ts";
 import type { PieceData, PieceDataPositionless } from "./piece.ts";
 import { Piece } from "./piece.ts";
 import { Position } from "./position.ts";
+import { map } from "../generator.ts";
 
 export class Board {
   #data: Table;

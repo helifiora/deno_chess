@@ -1,15 +1,11 @@
-import {
-  beforeEach,
-  describe,
-  it,
-} from "https://deno.land/std@0.202.0/testing/bdd.ts";
-import { MovementBuilder } from "../../src/domain/movement/builder.ts";
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/assert_equals.ts";
-import { AcceptanceFn } from "../../src/domain/movement/acceptance.ts";
-import { Board } from "../../src/domain/board.ts";
-import { Cell } from "../../src/domain/cell.ts";
-import { Piece } from "../../src/domain/piece.ts";
-import { Position } from "../../src/domain/position.ts";
+import { beforeEach, describe, it } from "@std/testing/bdd";
+import { assertEquals } from "@std/assert";
+import { MovementBuilder } from "@/domain/movement/builder.ts";
+import { AcceptanceFn } from "@/domain/movement/acceptance.ts";
+import { Board } from "@/domain/board.ts";
+import { Cell } from "@/domain/cell.ts";
+import { Piece } from "@/domain/piece.ts";
+import { Position } from "@/domain/position.ts";
 import { toSetCell } from "../helpers/helpers.ts";
 
 function testAcceptance(_: Board, piece: Piece): AcceptanceFn {

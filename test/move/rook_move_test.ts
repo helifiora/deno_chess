@@ -1,17 +1,11 @@
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/assert_equals.ts";
-import {
-  fakePieceData,
-  generateValidCell,
-  toSetCell,
-} from "../helpers/helpers.ts";
+import { assert, assertEquals, assertNotStrictEquals } from "@std/assert";
+import { describe, it } from "@std/testing/bdd";
+import { Board } from "@/domain/board.ts";
+import { Cell } from "@/domain/cell.ts";
+import { Position } from "@/domain/position.ts";
+import { fakePieceData, generateValidCell, toSetCell } from "../helpers/helpers.ts";
 import { horizontalData } from "../helpers/horizontal_data.ts";
 import { verticalData } from "../helpers/vertical_data.ts";
-import { assertNotStrictEquals } from "https://deno.land/std@0.202.0/assert/mod.ts";
-import { Board } from "../../src/domain/board.ts";
-import { Cell } from "../../src/domain/cell.ts";
-import { Position } from "../../src/domain/position.ts";
-import { assert } from "https://deno.land/std@0.202.0/assert/assert.ts";
-import { describe, it } from "https://deno.land/std@0.202.0/testing/bdd.ts";
 
 const data = (): [Cell, Cell[]][] => {
   const horizontalMap = new Map(horizontalData());

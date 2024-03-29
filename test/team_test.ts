@@ -1,5 +1,5 @@
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts";
-import { invertTeam } from "../src/domain/team.ts";
+import { assertEquals } from "@std/assert";
+import { invertTeam } from "@/domain/team.ts";
 
 Deno.test("Should invert team black to team white", () => {
   const result = invertTeam("black");

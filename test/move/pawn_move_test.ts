@@ -1,17 +1,11 @@
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/assert_equals.ts";
-import {
-  fakePieceData,
-  generateValidCell,
-  toSetCell,
-} from "../helpers/helpers.ts";
-import { assertNotStrictEquals } from "https://deno.land/std@0.202.0/assert/mod.ts";
-import { Board } from "../../src/domain/board.ts";
-import { Cell } from "../../src/domain/cell.ts";
-import { toDirection } from "../../src/domain/direction.ts";
-import { take } from "../../src/generator.ts";
-import { Position, PositionIncrement } from "../../src/domain/position.ts";
-import { invertTeam, Team } from "../../src/domain/team.ts";
-import { assert } from "https://deno.land/std@0.202.0/assert/assert.ts";
+import { assert, assertEquals, assertNotStrictEquals } from "@std/assert";
+import { Board } from "@/domain/board.ts";
+import { Cell } from "@/domain/cell.ts";
+import { toDirection } from "@/domain/direction.ts";
+import { take } from "@/generator.ts";
+import { Position, PositionIncrement } from "@/domain/position.ts";
+import { invertTeam, Team } from "@/domain/team.ts";
+import { fakePieceData, generateValidCell, toSetCell } from "../helpers/helpers.ts";
 
 function toIncrement(team: Team): PositionIncrement {
   return toDirection(team) === "top" ? { y: -1 } : { y: 1 };

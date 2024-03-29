@@ -1,8 +1,6 @@
 import { Signal } from "./signal.ts";
 import { createGame } from "./src/application/usecase/create_game.ts";
-import {
-  SameTeamFromOriginAndTargetError,
-} from "./src/application/usecase/errors.ts";
+import { SameTeamFromOriginAndTargetError } from "./src/application/usecase/errors.ts";
 import { movePieceTo } from "./src/application/usecase/move_piece_to.ts";
 import { selectPieceMoves } from "./src/application/usecase/select_piece_moves.ts";
 import { Cell } from "./src/domain/cell.ts";
@@ -66,7 +64,7 @@ export class ViewModel {
     this.#updateOrigin(null);
     const result = movePieceTo(this.#data, { origin, target });
     if (!result.ok) {
-      if (result.error instanceof SameTeamFromOriginAndTargetError) {
+      if (result.err instanceof SameTeamFromOriginAndTargetError) {
         this.#selectPiece(target);
       }
       return;

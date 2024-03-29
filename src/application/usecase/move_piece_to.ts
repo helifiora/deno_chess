@@ -4,7 +4,7 @@ import type { GameData } from "../../game.ts";
 import { Board } from "../../domain/board.ts";
 import { Position } from "../../domain/position.ts";
 import { invertTeam, type Team } from "../../domain/team.ts";
-import { error, ok, type Result } from "../../result.ts";
+import { err, ok, type Result } from "../../result.ts";
 import {
   NoDestinyInMovesError,
   NoPieceInCellError,
@@ -29,28 +29,28 @@ type Output = Result<
 
 export function movePieceTo(data: GameData, input: Input): Output {
   if (input.origin === input.target) {
-    return error(new SameOriginAndDestinyError(input.origin));
+    return err(new SameOriginAndDestinyError(input.origin));
   }
 
   const board = Board.restore(data.pieces);
   const piece = board.get(Position.fromCell(input.origin));
 
   if (piece === null) {
-    return error(new NoPieceInCellError(input.origin));
+    return err(new NoPieceInCellError(input.origin));
   }
 
   if (piece.team !== data.turn) {
-    return error(new NoPieceTurnError(data.turn, piece.team));
+    return err(new NoPieceTurnError(data.turn, piece.team));
   }
 
   const targetPiece = board.get(Position.fromCell(input.target));
   if (targetPiece?.hasSameTeam(piece)) {
-    return error(new SameTeamFromOriginAndTargetError(piece.team));
+    return err(new SameTeamFromOriginAndTargetError(piece.team));
   }
 
   const targetPosition = Position.fromCell(input.target);
   if (!piece.canMoveTo(targetPosition)) {
-    return error(new NoDestinyInMovesError(input.target));
+    return err(new NoDestinyInMovesError(input.target));
   }
 
   const capturedPiece = board.move(piece, targetPosition);
@@ -69,10 +69,7 @@ export function movePieceTo(data: GameData, input: Input): Output {
   });
 }
 
-function addCapturedPiece(
-  data: GameData,
-  captured: PieceDataPositionless | null,
-): PieceDataPositionless[] {
+function addCapturedPiece(data: GameData, captured: PieceDataPositionless | null): PieceDataPositionless[] {
   if (captured) {
     return [...data.capturedPieces, captured];
   }

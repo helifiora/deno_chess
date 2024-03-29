@@ -1,4 +1,4 @@
-import { Cell } from "../../src/domain/cell.ts";
+import { Cell } from "@/domain/cell.ts";
 
 type Data = () => [input: Cell, result: Cell[]][];
 

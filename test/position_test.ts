@@ -1,24 +1,8 @@
-import {
-  assert,
-  assertEquals,
-  assertInstanceOf,
-  assertThrows,
-} from "https://deno.land/std@0.208.0/assert/mod.ts";
-import { assertFalse } from "https://deno.land/std@0.208.0/assert/assert_false.ts";
-import { describe, it } from "https://deno.land/std@0.202.0/testing/bdd.ts";
-import {
-  generateInvalidData,
-  generateValidData,
-  toSetCell,
-} from "./helpers/helpers.ts";
-import { Cell } from "../src/domain/cell.ts";
-import {
-  Position,
-  PositionData,
-  PositionIncrement,
-  PositionInvalidError,
-} from "../src/domain/position.ts";
-import { assertNotStrictEquals } from "https://deno.land/std@0.208.0/assert/assert_not_strict_equals.ts";
+import { assert, assertEquals, assertFalse, assertInstanceOf, assertNotStrictEquals, assertThrows } from "@std/assert";
+import { describe, it } from "@std/testing/bdd";
+import { generateInvalidData, generateValidData, toSetCell } from "./helpers/helpers.ts";
+import { Cell } from "@/domain/cell.ts";
+import { Position, PositionData, PositionIncrement, PositionInvalidError } from "@/domain/position.ts";
 
 describe("Position.clone", () => {
   it("Should clone", () => {
@@ -124,7 +108,7 @@ describe("Position.increment", () => {
       for (const item of increments) {
         const result = Position.increment(position, item);
         assert(!result.ok);
-        assertInstanceOf(result.error, PositionInvalidError);
+        assertInstanceOf(result.err, PositionInvalidError);
       }
     });
   }

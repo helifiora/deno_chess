@@ -30,13 +30,7 @@ export class Piece {
   #type: PieceType;
   #moves: Move;
 
-  constructor(
-    board: Board,
-    type: PieceType,
-    team: Team,
-    position: Position,
-    moveCount: number,
-  ) {
+  constructor(board: Board, type: PieceType, team: Team, position: Position, moveCount: number) {
     this.#board = board;
     this.#team = team;
     this.#position = position;
@@ -76,13 +70,7 @@ export class Piece {
   }
 
   canMoveTo(target: Position): boolean {
-    for (const move of this.moves(true)) {
-      if (target.equals(move)) {
-        return true;
-      }
-    }
-
-    return false;
+    return some(this.moves(true), (s) => s.equals(target));
   }
 
   moves(verifyCheck = true): Generator<Position> {
@@ -90,8 +78,7 @@ export class Piece {
   }
 
   isInEnemyMove(): boolean {
-    const enemyTeam = invertTeam(this.#team);
-    const enemyPieces = this.#board.pieces(enemyTeam);
+    const enemyPieces = this.#board.pieces(invertTeam(this.#team));
     const enemyMoves = flatMap(enemyPieces, (s) => s.moves(false));
     return some(enemyMoves, (s) => s.equals(this.#position));
   }

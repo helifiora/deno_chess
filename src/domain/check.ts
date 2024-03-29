@@ -1,9 +1,10 @@
 import type { Board } from "./board.ts";
 import type { Position } from "./position.ts";
 import type { Team } from "./team.ts";
-import { error, ok, type Result } from "../result.ts";
+import { err, ok, type Result } from "../result.ts";
 import { NoKingFoundError, NoPieceFoundError } from "./domain_errors.ts";
 import { selectMovesByTeam } from "./piece_helpers.ts";
+import { map, some } from "../generator.ts";
 
 export function isInCheck(board: Board): Team | null {
   const teams: Team[] = ["black", "white"];
@@ -17,15 +18,14 @@ export function isInCheck(board: Board): Team | null {
   return null;
 }
 
-export function isInCheckmate(board: Board, checked: Team): boolean {
-  for (const { piece, target } of selectMovesByTeam(board, checked, true)) {
-    const result = doesMoveCausesCheck(board, piece.position, target);
-    if (result.ok && result.data === false) {
-      return false;
-    }
-  }
+export function isInCheckmate(board: Board, team: Team): boolean {
+  const moveCausesCheck = map(
+    selectMovesByTeam(board, team, true),
+    (s) => doesMoveCausesCheck(board, s.origin, s.target),
+  );
 
-  return true;
+  const hasMoveThatUndoCheck = some(moveCausesCheck, (s) => s.ok && s.data === false);
+  return hasMoveThatUndoCheck === false;
 }
 
 export function doesMoveCausesCheck(
@@ -37,14 +37,14 @@ export function doesMoveCausesCheck(
   const clonedPiece = clonedBoard.get(origin);
 
   if (clonedPiece === null) {
-    return error(new NoPieceFoundError(origin));
+    return err(new NoPieceFoundError(origin));
   }
 
   clonedBoard.move(clonedPiece, target);
   const clonedKing = clonedBoard.getKing(clonedPiece.team);
 
   if (clonedKing === null) {
-    return error(new NoKingFoundError(clonedPiece.team));
+    return err(new NoKingFoundError(clonedPiece.team));
   }
 
   return ok(clonedKing.isInEnemyMove());

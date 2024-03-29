@@ -1,18 +1,13 @@
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/assert_equals.ts";
-import {
-  fakePieceData,
-  generateValidCell,
-  toSetCell,
-} from "../helpers/helpers.ts";
-import { assertNotStrictEquals } from "https://deno.land/std@0.202.0/assert/assert_not_strict_equals.ts";
-import { Board } from "../../src/domain/board.ts";
-import { Cell } from "../../src/domain/cell.ts";
-import { Position } from "../../src/domain/position.ts";
-import { Horizontal } from "../../src/domain/movement/horizontal.ts";
-import { Vertical } from "../../src/domain/movement/vertical.ts";
-import { Diagonal } from "../../src/domain/movement/diagonal.ts";
-import { merge, toSet } from "../../src/generator.ts";
-import { describe, it } from "https://deno.land/std@0.202.0/testing/bdd.ts";
+import { describe, it } from "@std/testing/bdd";
+import { assertEquals, assertNotStrictEquals } from "@std/assert";
+import { Board } from "@/domain/board.ts";
+import { Cell } from "@/domain/cell.ts";
+import { Position } from "@/domain/position.ts";
+import { Horizontal } from "@/domain/movement/horizontal.ts";
+import { Vertical } from "@/domain/movement/vertical.ts";
+import { Diagonal } from "@/domain/movement/diagonal.ts";
+import { merge, toSet } from "@/generator.ts";
+import { fakePieceData, generateValidCell, toSetCell } from "../helpers/helpers.ts";
 
 function toExpected(cell: Cell): Set<Cell> {
   const origin = Position.fromCell(cell);

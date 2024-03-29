@@ -1,10 +1,10 @@
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/assert_equals.ts";
-import { Horizontal } from "../../src/domain/movement/horizontal.ts";
+import { describe, it } from "@std/testing/bdd";
+import { assertEquals } from "@std/assert";
+import { Horizontal } from "@/domain/movement/horizontal.ts";
+import { Board } from "@/domain/board.ts";
+import { Position } from "@/domain/position.ts";
 import { horizontalData } from "../helpers/horizontal_data.ts";
-import { Board } from "../../src/domain/board.ts";
-import { Position } from "../../src/domain/position.ts";
 import { fakePieceData, toSetCell } from "../helpers/helpers.ts";
-import { describe, it } from "https://deno.land/std@0.202.0/testing/bdd.ts";
 
 describe("Generate positions", () => {
   for (const [cell, expectedResult] of horizontalData()) {

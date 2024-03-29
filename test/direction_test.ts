@@ -1,5 +1,5 @@
-import { assertEquals } from "https://deno.land/std@0.202.0/assert/mod.ts";
-import { toDirection } from "../src/domain/direction.ts";
+import { assertEquals } from "@std/assert";
+import { toDirection } from "@/domain/direction.ts";
 
 Deno.test("Should black team move bottom", () => {
   const result = toDirection("black");

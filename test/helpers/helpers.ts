@@ -1,7 +1,7 @@
-import { Cell } from "../../src/domain/cell.ts";
-import { map } from "../../src/generator.ts";
-import { PieceData } from "../../src/domain/piece.ts";
-import { Position, PositionData } from "../../src/domain/position.ts";
+import { Cell } from "@/domain/cell.ts";
+import { map } from "@/generator.ts";
+import { PieceData } from "@/domain/piece.ts";
+import { Position, PositionData } from "@/domain/position.ts";
 
 export function fakePieceData(
   override: Partial<PieceData> & { cell: Cell },
