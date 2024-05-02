@@ -1,10 +1,10 @@
 import type { AcceptanceFn } from "./acceptance.ts";
-import type { Piece } from "../piece.ts";
+import type { Piece } from "@/domain/piece/piece.ts";
+import type { Board } from "@/domain/board.ts";
+import type { Movement } from "./movement.ts";
 import { Position, type PositionIncrement } from "../position.ts";
-import { Movement } from "./movement.ts";
-import { Board } from "../board.ts";
-import { filter, take } from "../../generator.ts";
-import { doesMoveCausesCheck } from "../check.ts";
+import { filter, take } from "@/generator.ts";
+import { CheckService } from "@/domain/check.ts";
 
 export type SequenceOptions = {
   take?: number;
@@ -35,7 +35,7 @@ export abstract class Sequence implements Movement {
   abstract execute(): Generator<Position>;
 
   sequence(increment: PositionIncrement): Generator<Position> {
-    let result = Position.sequence(this.piece.position, increment);
+    let result = this.#generatePositions(increment);
     if (this.#take !== null) {
       result = take(result, this.#take);
     }
@@ -70,8 +70,22 @@ export abstract class Sequence implements Movement {
   }
 
   #moveDoesNotCauseCheck(target: Position): boolean {
-    const result = doesMoveCausesCheck(this.board, this.piece.position, target);
-    return result.ok && result.data === false;
+    return new CheckService(this.board)
+      .isMoveCauseCheck(this.piece.position, target)
+      .match((value) => value === false, false);
+  }
+
+  *#generatePositions(increment: PositionIncrement): Generator<Position> {
+    let iterator = this.piece.position;
+    while (true) {
+      const result = Position.increment(iterator, increment);
+      if (result.isErr()) {
+        break;
+      }
+
+      iterator = result.data;
+      yield iterator.clone();
+    }
   }
 }
 

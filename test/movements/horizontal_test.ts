@@ -1,7 +1,7 @@
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { Horizontal } from "@/domain/movement/horizontal.ts";
 import { Board } from "@/domain/board.ts";
+import { Horizontal } from "@/domain/movement/horizontal.ts";
 import { Position } from "@/domain/position.ts";
 import { horizontalData } from "../helpers/horizontal_data.ts";
 import { fakePieceData, toSetCell } from "../helpers/helpers.ts";

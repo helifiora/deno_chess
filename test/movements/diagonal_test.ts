@@ -1,11 +1,11 @@
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { Diagonal } from "@/domain/movement/diagonal.ts";
 import { Board } from "@/domain/board.ts";
+import { Diagonal } from "@/domain/movement/diagonal.ts";
 import { map } from "@/generator.ts";
 import { Position } from "@/domain/position.ts";
-import { diagonalData } from "../helpers/diagonal_data.ts";
 import { toSetCell } from "../helpers/helpers.ts";
+import { diagonalData } from "../helpers/diagonal_data.ts";
 
 describe("Generate positions", () => {
   for (const [cell, expectedResult] of diagonalData()) {

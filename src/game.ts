@@ -1,5 +1,5 @@
-import { PieceData, PieceDataPositionless } from "./domain/piece.ts";
-import { Team } from "./domain/team.ts";
+import type { PieceData, PieceDataPositionless } from "@/domain/piece/piece.ts";
+import type { Team } from "@/domain/team.ts";
 
 export type GameData = {
   capturedPieces: PieceDataPositionless[];

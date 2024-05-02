@@ -1,7 +1,11 @@
+import type { PieceData } from "@/domain/piece/piece.ts";
+import {
+  Position,
+  type PositionData,
+  PositionIncrement,
+} from "@/domain/position.ts";
 import { Cell } from "@/domain/cell.ts";
 import { map } from "@/generator.ts";
-import { PieceData } from "@/domain/piece.ts";
-import { Position, PositionData } from "@/domain/position.ts";
 
 export function fakePieceData(
   override: Partial<PieceData> & { cell: Cell },
@@ -41,4 +45,20 @@ export function generateValidPosition(): Generator<Position> {
 
 export function generateValidCell(): Generator<Cell> {
   return map(generateValidPosition(), (s) => s.toCell());
+}
+
+export function* createSequence(
+  origin: Position,
+  increment: PositionIncrement,
+): Generator<Position> {
+  let iterator = origin;
+  while (true) {
+    const result = Position.increment(iterator, increment);
+    if (result.isErr()) {
+      break;
+    }
+
+    iterator = result.data;
+    yield iterator.clone();
+  }
 }

@@ -8,6 +8,7 @@ import { Vertical } from "@/domain/movement/vertical.ts";
 import { Diagonal } from "@/domain/movement/diagonal.ts";
 import { merge, toSet } from "@/generator.ts";
 import {
+  createSequence,
   fakePieceData,
   generateValidCell,
   toSetCell,
@@ -16,16 +17,16 @@ import {
 function toExpected(cell: Cell): Set<Cell> {
   const origin = Position.fromCell(cell);
 
-  const l = Position.sequence(origin, Horizontal.leftIncrement);
-  const r = Position.sequence(origin, Horizontal.rightIncrement);
+  const l = createSequence(origin, Horizontal.leftIncrement);
+  const r = createSequence(origin, Horizontal.rightIncrement);
 
-  const t = Position.sequence(origin, Vertical.topIncrement);
-  const tl = Position.sequence(origin, Diagonal.topLeftIncrement);
-  const tr = Position.sequence(origin, Diagonal.topRightIncrement);
+  const t = createSequence(origin, Vertical.topIncrement);
+  const tl = createSequence(origin, Diagonal.topLeftIncrement);
+  const tr = createSequence(origin, Diagonal.topRightIncrement);
 
-  const b = Position.sequence(origin, Vertical.bottomIncrement);
-  const bl = Position.sequence(origin, Diagonal.bottomLeftIncrement);
-  const br = Position.sequence(origin, Diagonal.bottomRightIncrement);
+  const b = createSequence(origin, Vertical.bottomIncrement);
+  const bl = createSequence(origin, Diagonal.bottomLeftIncrement);
+  const br = createSequence(origin, Diagonal.bottomRightIncrement);
 
   const generators = merge(l, r, t, tl, tr, b, bl, br);
 

@@ -1,7 +1,7 @@
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { L } from "@/domain/movement/l.ts";
 import { Board } from "@/domain/board.ts";
+import { L } from "@/domain/movement/l.ts";
 import { Position } from "@/domain/position.ts";
 import { lData } from "../helpers/l_data.ts";
 import { fakePieceData, toSetCell } from "../helpers/helpers.ts";

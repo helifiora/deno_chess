@@ -16,7 +16,7 @@ img {
   max-width: 100%;
 }
 
-.main-layout {
+#root {
   width: 100vw;
   height: 100dvh;
   background-color: #222;
@@ -24,10 +24,10 @@ img {
   overflow: auto;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 24px; 
 }
 
-.board-game-grid {
+.board-grid {
   width: 100%;
   max-width: 640px;
   display: grid;
@@ -36,28 +36,7 @@ img {
   gap: 4px;
 }
 
-.board-game-grid > .row,
-.board-game-grid > .column {
-  color: #fafafa;
-  padding: 4px;
-  font-size: 12px;
-  font-weight: bold;
-  font-family: sans-serif;
-  display: flex;
-}
-
-.board-game-grid > .row {
-  align-items: end;
-  justify-content: end;
-}
-
-.board-game-grid > .column {
-  align-items: start;
-  justify-content: start;
-  line-height: 1;
-}
-
-.board-game-grid > .cell {
+.board-grid > .cell {
   font-family: sans-serif;
   box-sizing: border-box;
   display: flex;
@@ -75,16 +54,37 @@ img {
   padding: 0;
 }
 
-.board-game-grid > .cell:nth-child(odd) {
+.board-grid > .cell:nth-child(odd) {
   background: #C3BEE6;
 }
 
-.board-game-grid > .cell.-highlight {
+.board-grid > .row,
+.board-grid > .column {
+  color: #fafafa;
+  padding: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: sans-serif;
+  display: flex;
+}
+
+.board-grid > .row {
+  align-items: end;
+  justify-content: end;
+}
+
+.board-grid > .column {
+  align-items: start;
+  justify-content: start;
+  line-height: 1;
+}
+
+.board-grid > .cell.-highlight {
   background: #E0DA60;
 }
 
 
-.board-game-grid > .cell.-origin {
+.board-grid > .cell.-origin {
   background-color: #726e1b;
 }
 
@@ -96,31 +96,32 @@ img {
   border: 1px solid #777;
   border-radius: 4px;
   background: #303030;
-  padding: 16px 24px;
-}
-
-.text-info {
-  gap: 4px;
+  padding: 24px;
+  flex-basis: 240px;
+  color: #efefef;
   display: flex;
-  font-weight: bold;
-  align-items: baseline;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+
 }
 
-.text-info > .title {
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #dbdbdb;
-}
-
-.text-info > .value {
-  font-size: 16px;
-  color: #a299da;
-  text-align: left;
-}
-
-.text-checkmate {
-  color: #a299da;
+.game-info > .title {
   font-size: 24px;
   font-weight: bold;
-  text-align: center;
+}
+
+.game-info > .content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #ccc;
+}
+
+.game-info > .check {
+  color: #a299da;
+  font-size: 18px;
+  font-weight: bold;
 }

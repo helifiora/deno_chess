@@ -6,6 +6,7 @@ import { take } from "@/generator.ts";
 import { Position, PositionIncrement } from "@/domain/position.ts";
 import { invertTeam, Team } from "@/domain/team.ts";
 import {
+  createSequence,
   fakePieceData,
   generateValidCell,
   toSetCell,
@@ -34,7 +35,7 @@ function toExpected(cell: Cell, team: Team, limit: number): Set<Cell> {
   const direction = toDirection(team);
   const increment = direction === "top" ? { y: -1 } : { y: 1 };
   const origin = Position.fromCell(cell);
-  const generator = Position.sequence(origin, increment);
+  const generator = createSequence(origin, increment);
   return toSetCell(take(generator, limit));
 }
 
@@ -85,7 +86,7 @@ for (const team of ["black", "white"] as Team[]) {
       Position.fromCell("c4"),
       increment,
     );
-    assert(enemyPosition.ok);
+    assert(enemyPosition.isOk());
     const enemyCell = enemyPosition.data.toCell();
 
     const board = Board.restore([
@@ -103,7 +104,7 @@ for (const team of ["black", "white"] as Team[]) {
     const increment = toIncrement(team);
 
     const allyPosition = Position.increment(Position.fromCell("c4"), increment);
-    assert(allyPosition.ok);
+    assert(allyPosition.isOk());
     const allyCell = allyPosition.data.toCell();
 
     const board = Board.restore([
@@ -125,11 +126,11 @@ for (const team of ["black", "white"] as Team[]) {
 
     const diagonalPosition = Position.increment(origin, { ...increment, x: 1 });
 
-    assert(diagonalPosition.ok);
+    assert(diagonalPosition.isOk());
     const diagonalCell = diagonalPosition.data.toCell();
 
     const verticalPosition = Position.increment(origin, increment);
-    assert(verticalPosition.ok);
+    assert(verticalPosition.isOk());
     const verticalCell = verticalPosition.data.toCell();
 
     const board = Board.restore([
@@ -152,11 +153,11 @@ for (const team of ["black", "white"] as Team[]) {
 
     const diagonalPosition = Position.increment(origin, { ...increment, x: 1 });
 
-    assert(diagonalPosition.ok);
+    assert(diagonalPosition.isOk());
     const diagonalCell = diagonalPosition.data.toCell();
 
     const verticalPosition = Position.increment(origin, increment);
-    assert(verticalPosition.ok);
+    assert(verticalPosition.isOk());
     const verticalCell = verticalPosition.data.toCell();
 
     const board = Board.restore([

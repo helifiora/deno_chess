@@ -1,4 +1,4 @@
-import type { Piece } from "../piece.ts";
+import type { Piece } from "@/domain/piece/piece.ts";
 import type { Position } from "../position.ts";
 
 type Target = { piece: Piece | null; position: Position };

@@ -1,6 +1,6 @@
 import type { Position, PositionIncrement } from "../position.ts";
-import { Sequence } from "./sequence.ts";
-import { merge } from "../../generator.ts";
+import { Sequence } from "@/domain/movement/sequence.ts";
+import { merge } from "@/generator.ts";
 
 export class Horizontal extends Sequence {
   static leftIncrement: PositionIncrement = { x: -1 };

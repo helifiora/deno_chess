@@ -8,7 +8,7 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 
 import { Board } from "@/domain/board.ts";
 import { filter, map } from "@/generator.ts";
-import { PieceData } from "@/domain/piece.ts";
+import { PieceData } from "@/domain/piece/piece.ts";
 import { Position } from "@/domain/position.ts";
 import { Cell } from "@/domain/cell.ts";
 

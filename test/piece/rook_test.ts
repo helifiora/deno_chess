@@ -39,7 +39,7 @@ describe("Rook positions", () => {
         increment,
       );
 
-      assert(kingPosition.ok);
+      assert(kingPosition.isOk());
       const kingCell = kingPosition.data.toCell();
 
       const board = Board.restore([

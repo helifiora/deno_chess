@@ -111,7 +111,7 @@ describe("Position.increment", () => {
         const newX = position.x + (item.x ?? 0);
         const newY = position.y + (item.y ?? 0);
         const result = Position.increment(position, item);
-        assert(result.ok);
+        assert(result.isOk());
         assertEquals(result.data.x, newX);
         assertEquals(result.data.y, newY);
       }
@@ -123,8 +123,8 @@ describe("Position.increment", () => {
       const position = Position.fromCell(cell);
       for (const item of increments) {
         const result = Position.increment(position, item);
-        assert(!result.ok);
-        assertInstanceOf(result.err, PositionInvalidError);
+        assert(result.isErr());
+        assertInstanceOf(result.error, PositionInvalidError);
       }
     });
   }
@@ -169,45 +169,4 @@ describe("Position.fromCell", () => {
       assertEquals(result.y, expectedResult.y);
     });
   }
-});
-
-describe("Position.sequence", () => {
-  it("Should generate top", () => {
-    const expectedResult = new Set(["a5", "a6", "a7", "a8"]);
-    const position = Position.fromCell("a4");
-
-    const result = toSetCell(Position.sequence(position, { y: -1 }));
-
-    assertEquals(result, expectedResult);
-  });
-
-  it("Should generate bottom", () => {
-    const expectedResult = new Set(["a4", "a3", "a2", "a1"]);
-
-    const position = Position.fromCell("a5");
-
-    const result = toSetCell(Position.sequence(position, { y: 1 }));
-
-    assertEquals(result, expectedResult);
-  });
-
-  it("Should generate right", () => {
-    const expectedResult = new Set(["d4", "e4", "f4", "g4", "h4"]);
-
-    const position = Position.fromCell("c4");
-
-    const result = toSetCell(Position.sequence(position, { x: 1 }));
-
-    assertEquals(result, expectedResult);
-  });
-
-  it("Should generate left", () => {
-    const expectedResult = new Set(["b4", "a4"]);
-
-    const position = Position.fromCell("c4");
-
-    const result = toSetCell(Position.sequence(position, { x: -1 }));
-
-    assertEquals(result, expectedResult);
-  });
 });

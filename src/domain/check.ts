@@ -1,54 +1,68 @@
-import type { Board } from "./board.ts";
-import type { Position } from "./position.ts";
-import type { Team } from "./team.ts";
+import type { Board } from "@/domain/board.ts";
+import type { Position } from "@/domain/position.ts";
+import { type Team, teams } from "@/domain/team.ts";
 import { err, ok, type Result } from "../result.ts";
-import { NoKingFoundError, NoPieceFoundError } from "./domain_errors.ts";
-import { selectMovesByTeam } from "./piece_helpers.ts";
-import { map, some } from "../generator.ts";
+import { NoKingFoundError, NoPieceFoundError } from "@/domain/domain_errors.ts";
+import { selectMovesByTeam } from "@/domain/piece/helper.ts";
+import { map, some } from "@/generator.ts";
 
-export function isInCheck(board: Board): Team | null {
-  const teams: Team[] = ["black", "white"];
-  for (const team of teams) {
-    const king = board.getKing(team);
-    if (king?.isInEnemyMove()) {
-      return team;
+export type InCheck = {
+  team: Team;
+  isCheckmate: boolean;
+};
+
+export type MoveCausesCheckResult = Result<
+  boolean,
+  NoKingFoundError | NoPieceFoundError
+>;
+
+export class CheckService {
+  #board: Board;
+
+  constructor(board: Board) {
+    this.#board = board;
+  }
+
+  isInCheck(): InCheck | null {
+    for (const team of teams()) {
+      const king = this.#board.getKing(team);
+      if (king?.isInEnemyMove()) {
+        return { team, isCheckmate: this.#isCheckmate(team) };
+      }
     }
+
+    return null;
   }
 
-  return null;
-}
+  isMoveCauseCheck(origin: Position, target: Position): MoveCausesCheckResult {
+    const clonedBoard = this.#board.clone();
+    const clonedPiece = clonedBoard.get(origin);
 
-export function isInCheckmate(board: Board, team: Team): boolean {
-  const moveCausesCheck = map(
-    selectMovesByTeam(board, team, true),
-    (s) => doesMoveCausesCheck(board, s.origin, s.target),
-  );
+    if (clonedPiece === null) {
+      return err(new NoPieceFoundError(origin));
+    }
 
-  const hasMoveThatUndoCheck = some(
-    moveCausesCheck,
-    (s) => s.ok && s.data === false,
-  );
-  return hasMoveThatUndoCheck === false;
-}
+    clonedBoard.move(clonedPiece, target);
+    const clonedKing = clonedBoard.getKing(clonedPiece.team);
 
-export function doesMoveCausesCheck(
-  board: Board,
-  origin: Position,
-  target: Position,
-): Result<boolean, NoKingFoundError | NoPieceFoundError> {
-  const clonedBoard = board.clone();
-  const clonedPiece = clonedBoard.get(origin);
+    if (clonedKing === null) {
+      return err(new NoKingFoundError(clonedPiece.team));
+    }
 
-  if (clonedPiece === null) {
-    return err(new NoPieceFoundError(origin));
+    return ok(clonedKing.isInEnemyMove());
   }
 
-  clonedBoard.move(clonedPiece, target);
-  const clonedKing = clonedBoard.getKing(clonedPiece.team);
+  #isCheckmate(team: Team): boolean {
+    const moveThatCausesCheck = map(
+      selectMovesByTeam(this.#board, team, true),
+      (s) => this.isMoveCauseCheck(s.origin, s.target),
+    );
 
-  if (clonedKing === null) {
-    return err(new NoKingFoundError(clonedPiece.team));
+    const hasMoveThatUndoCheck = some(
+      moveThatCausesCheck,
+      (s) => s.isOk() && s.data === false,
+    );
+
+    return hasMoveThatUndoCheck === false;
   }
-
-  return ok(clonedKing.isInEnemyMove());
 }

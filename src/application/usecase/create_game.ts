@@ -1,5 +1,5 @@
-import { PieceData } from "../../domain/piece.ts";
-import { GameData } from "../../game.ts";
+import type { PieceData } from "@/domain/piece/piece.ts";
+import type { GameData } from "@/game.ts";
 
 type Output = { data: GameData };
 

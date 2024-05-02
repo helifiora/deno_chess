@@ -12,7 +12,7 @@ describe("Knight positions", () => {
 
       const increment = Position.fromCell(cell).x > 0 ? { x: -1 } : { x: 1 };
       const position = Position.increment(Position.fromCell(cell), increment);
-      assert(position.ok);
+      assert(position.isOk());
       const kingCell = position.data.toCell();
 
       const board = Board.restore([

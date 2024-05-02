@@ -1,10 +1,10 @@
+import type { Cell } from "@/domain/cell.ts";
+import type { Piece } from "@/domain/piece/piece.ts";
+import type { AcceptanceFn } from "@/domain/movement/acceptance.ts";
 import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 import { MovementBuilder } from "@/domain/movement/builder.ts";
-import { AcceptanceFn } from "@/domain/movement/acceptance.ts";
 import { Board } from "@/domain/board.ts";
-import { Cell } from "@/domain/cell.ts";
-import { Piece } from "@/domain/piece.ts";
 import { Position } from "@/domain/position.ts";
 import { toSetCell } from "../helpers/helpers.ts";
 

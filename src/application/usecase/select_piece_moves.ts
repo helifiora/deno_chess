@@ -1,10 +1,13 @@
-import type { Cell } from "../../domain/cell.ts";
-import type { GameData } from "../../game.ts";
-import { Board } from "../../domain/board.ts";
-import { Position } from "../../domain/position.ts";
-import { NoPieceInCellError, NoPieceTurnError } from "./errors.ts";
-import { err, ok, type Result } from "../../result.ts";
-import { toArray } from "../../generator.ts";
+import type { Cell } from "@/domain/cell.ts";
+import type { GameData } from "@/game.ts";
+import { Board } from "@/domain/board.ts";
+import { Position } from "@/domain/position.ts";
+import {
+  NoPieceInCellError,
+  NoPieceTurnError,
+} from "@/application/usecase/errors.ts";
+import { err, ok, type Result } from "@/result.ts";
+import { toArray } from "@/generator.ts";
 
 type Input = { origin: Cell };
 

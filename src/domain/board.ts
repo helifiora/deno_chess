@@ -1,8 +1,12 @@
 import type { Team } from "./team.ts";
-import type { PieceData, PieceDataPositionless } from "./piece.ts";
-import { Piece } from "./piece.ts";
-import { Position } from "./position.ts";
-import { map } from "../generator.ts";
+import type {
+  Piece,
+  PieceData,
+  PieceDataPositionless,
+} from "@/domain/piece/piece.ts";
+import { Position } from "@/domain/position.ts";
+import { isKing, toPiece } from "@/domain/piece/helper.ts";
+import { range } from "@/generator.ts";
 
 export class Board {
   #data: Table;
@@ -20,7 +24,7 @@ export class Board {
   static restore(pieceDataList: PieceData[]): Board {
     const board = Board.empty();
     for (const pieceData of pieceDataList) {
-      const piece = Piece.fromData(board, pieceData);
+      const piece = toPiece(board, pieceData);
       board.#place(piece, piece.position);
     }
 
@@ -41,8 +45,8 @@ export class Board {
   }
 
   *positions(): Generator<Position> {
-    for (let y = Position.min; y <= Position.max; y++) {
-      for (let x = Position.min; x <= Position.max; x++) {
+    for (const y of range(Position.min, Position.max)) {
+      for (const x of range(Position.min, Position.max)) {
         yield new Position(x, y);
       }
     }
@@ -54,7 +58,7 @@ export class Board {
 
   getKing(team: Team): Piece | null {
     for (const piece of this.pieces(team)) {
-      if (piece.type === "king") {
+      if (isKing(piece)) {
         return piece;
       }
     }

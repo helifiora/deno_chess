@@ -90,3 +90,13 @@ export function toArray<T, R>(
 
   return Array.from(data);
 }
+
+export function* range(
+  min: number,
+  max: number,
+  step: number = 1,
+): Generator<number> {
+  for (let i = min; i <= max; i += step) {
+    yield i;
+  }
+}

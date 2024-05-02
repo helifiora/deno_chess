@@ -1,9 +1,9 @@
 import type { Board } from "../board.ts";
-import type { Piece } from "../piece.ts";
-import type { Position, PositionIncrement } from "../position.ts";
-import type { Direction } from "../direction.ts";
-import { Sequence, type SequenceOptions } from "./sequence.ts";
-import { merge } from "../../generator.ts";
+import type { Piece } from "@/domain/piece/piece.ts";
+import type { Position, PositionIncrement } from "@/domain/position.ts";
+import type { Direction } from "@/domain/direction.ts";
+import { Sequence, type SequenceOptions } from "@/domain/movement/sequence.ts";
+import { merge } from "@/generator.ts";
 
 export type DiagonalOptions = SequenceOptions & { direction?: Direction };
 

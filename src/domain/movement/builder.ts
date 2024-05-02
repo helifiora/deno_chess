@@ -1,13 +1,12 @@
 import type { SequenceOptions } from "./sequence.ts";
-import { Diagonal, type DiagonalOptions } from "./diagonal.ts";
-import { Vertical, type VerticalOptions } from "./vertical.ts";
+import { Diagonal, type DiagonalOptions } from "@/domain/movement/diagonal.ts";
+import { Vertical, type VerticalOptions } from "@/domain/movement/vertical.ts";
 import { L } from "./l.ts";
-import { Movement } from "./movement.ts";
-import { Horizontal } from "./horizontal.ts";
-import { Board } from "../board.ts";
-import { merge } from "../../generator.ts";
-import { Piece } from "../piece.ts";
-import { Position } from "../position.ts";
+import { Movement } from "@/domain/movement/movement.ts";
+import { Horizontal } from "@/domain/movement/horizontal.ts";
+import { merge } from "@/generator.ts";
+import { Piece } from "@/domain/piece/piece.ts";
+import { Position } from "@/domain/position.ts";
 
 export class MovementBuilder {
   #piece: Piece;
@@ -28,6 +27,7 @@ export class MovementBuilder {
     this.#data.push(
       new Horizontal(this.#piece.board, this.#piece, this.#verify, options),
     );
+
     return this;
   }
 

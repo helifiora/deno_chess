@@ -1,5 +1,5 @@
 import type { Cell } from "./cell.ts";
-import { err, ok, type Result } from "../result.ts";
+import { err, ok, type Result } from "@/result.ts";
 
 export type PositionData = {
   x: number;
@@ -49,22 +49,6 @@ export class Position {
 
   static isValid(x: number, y: number): boolean {
     return Position.inRange(x) && Position.inRange(y);
-  }
-
-  static *sequence(
-    origin: Position,
-    increment: PositionIncrement,
-  ): Generator<Position> {
-    let iterator = origin;
-    while (true) {
-      const result = Position.increment(iterator, increment);
-      if (!result.ok) {
-        break;
-      }
-
-      iterator = result.data;
-      yield iterator.clone();
-    }
   }
 
   get x(): number {

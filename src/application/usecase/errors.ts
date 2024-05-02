@@ -1,5 +1,5 @@
-import type { Cell } from "../../domain/cell.ts";
-import type { Team } from "../../domain/team.ts";
+import type { Cell } from "@/domain/cell.ts";
+import type { Team } from "@/domain/team.ts";
 
 export class NoPieceInCellError extends Error {
   cell: Cell;

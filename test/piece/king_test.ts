@@ -5,6 +5,7 @@ import { Cell } from "@/domain/cell.ts";
 import { merge, take } from "@/generator.ts";
 import { Position, PositionIncrement } from "@/domain/position.ts";
 import {
+  createSequence,
   fakePieceData,
   generateValidCell,
   toSetCell,
@@ -22,9 +23,7 @@ function toExpected(origin: Position): Set<Cell> {
     { y: -1 },
   ];
 
-  const generators = increments.map((i) =>
-    take(Position.sequence(origin, i), 1)
-  );
+  const generators = increments.map((i) => take(createSequence(origin, i), 1));
 
   return toSetCell(merge(...generators));
 }
@@ -97,7 +96,7 @@ Deno.test("Should king has no moves when enemies block all movimentation", () =>
   ]);
 
   const piece = board.get(Position.fromCell("a1"))!;
-  const result = toSetCell(piece.moves());
+  const result = toSetCell(piece.moves(true));
 
   assertEquals(result, new Set());
 });

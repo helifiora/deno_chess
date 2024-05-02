@@ -1,9 +1,9 @@
-import type { Cell } from "../../domain/cell.ts";
-import type { PieceDataPositionless } from "../../domain/piece.ts";
-import type { GameData } from "../../game.ts";
-import { Board } from "../../domain/board.ts";
-import { Position } from "../../domain/position.ts";
-import { invertTeam, type Team } from "../../domain/team.ts";
+import type { Cell } from "@/domain/cell.ts";
+import type { PieceDataPositionless } from "@/domain/piece/piece.ts";
+import type { GameData } from "@/game.ts";
+import { Board } from "@/domain/board.ts";
+import { Position } from "@/domain/position.ts";
+import { invertTeam, type Team } from "@/domain/team.ts";
 import { err, ok, type Result } from "../../result.ts";
 import {
   NoDestinyInMovesError,
@@ -11,8 +11,8 @@ import {
   NoPieceTurnError,
   SameOriginAndDestinyError,
   SameTeamFromOriginAndTargetError,
-} from "./errors.ts";
-import { isInCheck, isInCheckmate } from "../../domain/check.ts";
+} from "@/application/usecase/errors.ts";
+import { CheckService } from "@/domain/check.ts";
 
 type Input = { origin: Cell; target: Cell };
 
@@ -56,8 +56,10 @@ export function movePieceTo(data: GameData, input: Input): Output {
   const capturedPiece = board.move(piece, targetPosition);
   piece.increaseCount();
 
-  const isCheck = isInCheck(board);
-  const isCheckmate = isCheck !== null ? isInCheckmate(board, isCheck) : false;
+  const checkResult = new CheckService(board).isInCheck();
+
+  const isCheck = checkResult?.team ?? null;
+  const isCheckmate = checkResult?.isCheckmate ?? false;
 
   return ok({
     capturedPieces: addCapturedPiece(data, capturedPiece),
